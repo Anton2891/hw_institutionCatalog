@@ -1,0 +1,43 @@
+databaseChangeLog:
+    - changeSet:
+        id: 1
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_001_create_institution.sql
+    - changeSet:
+        id: 2
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_002_create_review.sql
+    - changeSet:
+          id: 3
+          author: anton.stolyarov
+          changes:
+              - sqlFile:
+                    path: \db\changelog\change_sets\V_003_update_institution.sql
+    - changeSet:
+        id: 4
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_004_update_review.sql
+    - changeSet:
+        id: 5
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_005_add_phone_number_email_to_institution.sql
+    - changeSet:
+        id: 6
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_006_add_foundation_date.sql
+    - changeSet:
+        id: 7
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_007_add_email_to_institution.sql
