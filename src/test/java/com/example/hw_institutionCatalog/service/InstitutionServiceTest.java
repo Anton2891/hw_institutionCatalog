@@ -39,6 +39,7 @@ public class InstitutionServiceTest extends AppContextTest {
                 .name("test")
                 .address( "address_test")
                 .description("description_test")
+                .telephoneNumber("8 958 526 33 63")
                 .foundationDate(LocalDate.of(2022, 8, 26))
                 .build();
         Assertions.assertThrowsExactly(FoundationDateIsExpiredException.class,
@@ -49,6 +50,7 @@ public class InstitutionServiceTest extends AppContextTest {
                 .name("test")
                 .address( "address_test")
                 .description("description_test")
+                .telephoneNumber("+79585263363")
                 .foundationDate(LocalDate.of(2012, 12, 12))
                 .build();
 

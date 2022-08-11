@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class Util {
     private static final Logger log = LoggerFactory.getLogger(Util.class);
     private final static PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
-    private final static String EMAIL_PATTERN = "^(.+)@(\\S+)$";
+    private final static String EMAIL_PATTERN = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
     private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     private static Matcher matcher;
 
