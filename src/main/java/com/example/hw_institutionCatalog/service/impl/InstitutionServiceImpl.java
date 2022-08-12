@@ -30,8 +30,12 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public Institution getDescriptionInstitutionById(Integer id) {
-        return institutionRepository.findById(id).get();
+    public Institution getDescriptionInstitutionById(Integer id) throws InstitutionNotFoundException {
+        Optional<Institution> byId = institutionRepository.findById(id);
+        if (byId.isEmpty()){
+            throw new InstitutionNotFoundException(id);
+        }
+        return byId.get();
     }
 
 
@@ -41,9 +45,10 @@ public class InstitutionServiceImpl implements InstitutionService {
             throw new FoundationDateIsExpiredException(institutionInDto.getName(), institutionInDto.getFoundationDate());
         }
         Institution institution = institutionMapper.mapInstitutionInDtoToInstitution(institutionInDto);
-        Institution save = institutionRepository.save(institution);
-        return save;
+        return institutionRepository.save(institution);
     }
+
+
 
     @Override
     public LocalDate getFoundationDate(Integer id) throws InstitutionNotFoundException {

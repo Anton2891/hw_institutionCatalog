@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 @Getter
@@ -16,11 +19,17 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 public class InstitutionInDto {
     private final Integer id;
+
+    @NotBlank(message = "пустое имя")
     private final String name;
     private final String address;
     private final String description;
+
+    @NotBlank(message = "пустой телефонный номер")
     private final String telephoneNumber;
     private final String email;
+
+    @Past(message = "будущее")
     @JsonSerialize(using = LocalDateSerializer.class)
     @DateTimeFormat(pattern = "YYYY-MM-DD")
     private final LocalDate foundationDate;

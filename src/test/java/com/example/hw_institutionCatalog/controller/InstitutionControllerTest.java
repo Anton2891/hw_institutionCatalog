@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -34,16 +35,16 @@ public class InstitutionControllerTest extends AppContextTest {
                 .name("institutionInDto")
                 .address("mmmmmmmmmmm2585")
                 .description("zzzzzzzzzzzzzzz")
-//                .telephoneNumber("+79992526363")
+                .telephoneNumber("+79996663322")
 //                .email("fgh@gdfd.ru")
-                .foundationDate(LocalDate.of(2008, 02, 28))
+                .foundationDate(LocalDate.of(2011, 06, 23))
                 .build();
         institutionInDto = InstitutionInDto.builder()
                 .name("institutionInDto")
                 .address("mmmmmmmmmmm2585")
                 .description("zzzzzzzzzzzzzzz")
-//                .telephoneNumber("+79992526363")
-//                .email("fgh@gdfd.ru")
+                .telephoneNumber("+79992526363")
+                .email("fgh@gdfd.ru")
                 .foundationDate(LocalDate.of(2008, 02, 28))
                 .build();
         InstitutionOutDto.InstitutionOutDtoBuilder institutionOutDtoBuilder = InstitutionOutDto.builder()
@@ -63,12 +64,12 @@ public class InstitutionControllerTest extends AppContextTest {
         ObjectMapper objectMapper =new JsonMapper();
 //        String afterSaveRestaurant = objectMapper.writeValueAsString(institutionOutDto);
         String afterSaveRestaurant = objectMapper.writeValueAsString(institutionOutDto);
-        this.mockMvc.perform(post("/add/inst"/*,"?name=institutionInDto&address=mmmmmmmmmmm2585&description=zzzzzzzzzzzzzzz" +
-                        "&foundation_date=2011-6-23"*/)
+        this.mockMvc.perform(post("/add/inst")
                         .param("name", "institutionInDto")
                         .param("address","mmmmmmmmmmm2585")
                         .param("description","zzzzzzzzzzzzzzz")
-                        .param("foundation_date","2011-06-23"))
+                        .param("foundation_date","2011-06-23")
+                        .param("telephone_number", "+79996663322"))
 //                .contentType(MediaType.APPLICATION_JSON)
 //                        .contentType("?name=institutionInDto&address=mmmmmmmmmmm2585&description=zzzzzzzzzzzzzzz\" +\n" +
 //                                "                        \"&foundation_date=2011-6-23")
@@ -81,4 +82,51 @@ public class InstitutionControllerTest extends AppContextTest {
                 .andExpect(content().json(afterSaveRestaurant)); // check response
     }
 
+    @Test
+    public void institutionNotFound() throws Exception {
+        this.mockMvc.perform(get("/desk/{id}", 9999))
+                .andDo(print()) //print response in console
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void validationTest() throws Exception {
+        ObjectMapper objectMapper = new JsonMapper();
+        InstitutionInDto dto = InstitutionInDto.builder()
+                .name("")
+                .foundationDate(LocalDate.now().plusDays(6))
+                .telephoneNumber("bfbfdbdf")
+                .build();
+
+        this.mockMvc.perform(post("/institution")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andDo(print()) //print response in console
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().json("{\"name\":\"пустое имя\"," +
+                                "\"telephoneNumber\": \"телефонный номер не соответсвует формату\","
+                        //"\"telephoneNumber\": \"пустой телефонный номер\"}"
+                        + "\"foundationDate\": \"будущее\"}"
+                ));// check status
+    }
+
+    @Test
+    public void checkFoundationDateException() throws Exception {
+        ObjectMapper objectMapper = new JsonMapper();
+        LocalDate date = LocalDate.now().plusDays(6);
+        InstitutionInDto dto = InstitutionInDto.builder()
+                .name("test")
+                .foundationDate(date)
+                .telephoneNumber("+7 999 999 99 99")
+                .build();
+
+        String result = "Institution with name \"" + "test" + "\"" +
+                "has foundation date " + date;
+        this.mockMvc.perform(post("/institution")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andDo(print()) //print response in console
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().string(result));
+    }
 }

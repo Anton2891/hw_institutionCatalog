@@ -10,4 +10,8 @@ public class InstitutionNotFoundException extends Exception{
     public InstitutionNotFoundException(Integer institutionId) {
         this.institutionId = institutionId;
     }
+
+    public Integer getInstitutionId(){
+        return institutionId;
+    }
 }

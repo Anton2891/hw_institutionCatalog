@@ -27,14 +27,14 @@ public class Util {
         return phoneNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.E164);
     }
 
-//    public static boolean checkRuTelephone(String cxt) {
-//        try {
-//            reformatRuTelephone(cxt);
-//            return true;
-//        } catch (NumberParseException e) {
-//            return false;
-//        }
-//    }
+    public static boolean checkRuTelephone(String cxt) {
+        try {
+            reformatRuTelephone(cxt);
+            return true;
+        } catch (NumberParseException e) {
+            return false;
+        }
+    }
 
     public static boolean validateEmail(final String email){
         matcher = pattern.matcher(email);

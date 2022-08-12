@@ -60,7 +60,7 @@ public class InstitutionServiceTest extends AppContextTest {
     }
 
     @Test
-    void getDescriptionInstitutionById() {
+    void getDescriptionInstitutionById() throws InstitutionNotFoundException {
         int id = 1;
         Institution institution = institutionService.getDescriptionInstitutionById(id);
         assertEquals(institution.getId(), id);
