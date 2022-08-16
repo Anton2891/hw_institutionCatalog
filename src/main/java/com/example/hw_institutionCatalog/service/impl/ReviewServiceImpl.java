@@ -1,5 +1,6 @@
 package com.example.hw_institutionCatalog.service.impl;
 
+import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.repository.InstitutionRepository;
@@ -40,23 +41,23 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException {
-//        Optional<Institution> byId = institutionRepository.findById(institutionId);
-//        if (byId.isPresent()){
-//            Institution institution = byId.get();
-//            Review review1 = Review.builder()
-//                    .institutionId(institutionId)
-//                    .rating(rating)
-//                    .review(review)
-//                    .build();
-//            reviewRepository.save(review1);
-//        }
-//        throw new InstitutionNotFoundException(institutionId);
+    public Review addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException {
+        Optional<Institution> byId = institutionRepository.findById(institutionId);
+        if (byId.isEmpty()){
+            throw new InstitutionNotFoundException(institutionId);
+        }
+        Institution institution = byId.get();
         Review review1 = Review.builder()
-                .institutionId(institutionId)
+                .institution(institution)
                 .rating(rating)
-                .review(review).build();
-        reviewRepository.save(review1);
+                .review(review)
+                .build();
+        return reviewRepository.save(review1);
+//        Review review1 = Review.builder()
+//                .institutionId(institutionId)
+//                .rating(rating)
+//                .review(review).build();
+//        reviewRepository.save(review1);
     }
 
     @Override

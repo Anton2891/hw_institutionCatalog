@@ -1,6 +1,7 @@
 package com.example.hw_institutionCatalog.controller;
 
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
+import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.mapper.ReviewMapper;

@@ -1,27 +1,22 @@
 package com.example.hw_institutionCatalog.dto.out;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
-@Getter
-@RequiredArgsConstructor
+/**
+ * @param foundationDate @JsonSerialize(using = LocalDateSerializer.class)    @DateTimeFormat(pattern = "YYYY-MM-DD")
+ */
+//@Getter
+//@RequiredArgsConstructor
 @Builder
-@EqualsAndHashCode
-public class InstitutionOutDto {
-    private final Integer id;
-    private final String name;
-    private final String address;
-    private final String description;
-    private final String telephoneNumber;
-    private final String email;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
-    private final LocalDate foundationDate;
+//@EqualsAndHashCode
+public record InstitutionOutDto(Integer id, String name, String address, String description, String telephoneNumber,
+                                String email, List<ReviewOutDto> reviewList,
+                                @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") LocalDate foundationDate) {
 }

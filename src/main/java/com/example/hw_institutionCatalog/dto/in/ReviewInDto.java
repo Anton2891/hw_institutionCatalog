@@ -1,6 +1,7 @@
 package com.example.hw_institutionCatalog.dto.in;
 
 
+import com.example.hw_institutionCatalog.entity.Institution;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class ReviewInDto {
     private Integer id;
     @NotNull
-    private Integer institutionId;
+    private Institution institution;
     private Integer rating;
     private String review;
 }

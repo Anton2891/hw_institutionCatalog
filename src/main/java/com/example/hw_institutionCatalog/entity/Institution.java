@@ -1,9 +1,12 @@
 package com.example.hw_institutionCatalog.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -44,6 +47,11 @@ public class Institution {
     @Basic
     @Column(name = "foundation_date")
     private LocalDate foundationDate;
+
+    @OneToMany(mappedBy = "institution", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.SUBSELECT)
+    private List<Review> reviewList;
+
 
     @Override
     public boolean equals(Object o) {

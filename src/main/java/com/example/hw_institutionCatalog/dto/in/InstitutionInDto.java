@@ -1,5 +1,6 @@
 package com.example.hw_institutionCatalog.dto.in;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Builder;
@@ -30,7 +31,6 @@ public class InstitutionInDto {
     private final String email;
 
     @Past(message = "будущее")
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private final LocalDate foundationDate;
 }

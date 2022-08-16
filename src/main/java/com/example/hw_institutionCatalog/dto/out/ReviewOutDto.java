@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @EqualsAndHashCode
 public class ReviewOutDto {
     private Integer id;
-    private Integer institutionId;
+    private Integer institution;
     private Integer rating;
     private String review;
 
