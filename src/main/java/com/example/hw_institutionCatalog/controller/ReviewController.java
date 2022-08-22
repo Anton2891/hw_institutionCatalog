@@ -7,6 +7,9 @@ import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.mapper.ReviewMapper;
 import com.example.hw_institutionCatalog.service.impl.ReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,23 +29,19 @@ public class ReviewController {
     }
 
     @GetMapping("rev/{id}")
-    public List<ReviewOutDto> getReviewInstitutionById(@PathVariable("id") Integer id) throws InstitutionNotFoundException {
-        List<Review> reviews = service.getReviewInstitutionById(id);
-        List<ReviewOutDto> reviewOutDtoList = new ArrayList<>();
-        for (Review r: reviews) {
-            reviewOutDtoList.add(mapper.mapReviewToReviewOutDto(r));
-            }
-        return reviewOutDtoList;
+    public Page<ReviewOutDto> getReviewInstitutionById(@PageableDefault(sort = "name")
+                                                       @PathVariable("id") Integer id, Pageable pageable)
+            throws InstitutionNotFoundException {
+        Page<Review> reviews = service.getReviewInstitutionById(id, pageable);
+        return reviews.map(mapper::mapReviewToReviewOutDto);
     }
 
     @GetMapping("rat/{id}")
-    public List<ReviewOutDto> getRatingInstitutionById(@PathVariable("id") Integer id) throws InstitutionNotFoundException {
-        List<Review> reviews = service.getRatingInstitutionById(id);
-        List<ReviewOutDto> reviewOutDtoList = new ArrayList<>();
-        for (Review r: reviews) {
-            reviewOutDtoList.add(mapper.mapReviewToReviewOutDto(r));
-        }
-        return reviewOutDtoList;
+    public Page<ReviewOutDto> getRatingInstitutionById(@PageableDefault(sort = "name")
+                                                       @PathVariable("id") Integer id, Pageable pageable)
+            throws InstitutionNotFoundException {
+        Page<Review> reviews = service.getRatingInstitutionById(id, pageable);
+        return reviews.map(mapper::mapReviewToReviewOutDto);
     }
 
     @PostMapping("add/rev")

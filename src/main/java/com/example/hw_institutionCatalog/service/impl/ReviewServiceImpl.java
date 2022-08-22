@@ -6,6 +6,8 @@ import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.repository.InstitutionRepository;
 import com.example.hw_institutionCatalog.repository.ReviewRepository;
 import com.example.hw_institutionCatalog.service.ReviewService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +25,8 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public List<Review> getReviewInstitutionById(Integer id) throws InstitutionNotFoundException {
-        Optional<List<Review>> byId = reviewRepository.findAllById(id);
+    public Page<Review> getReviewInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException {
+        Optional<Page<Review>> byId = reviewRepository.findAllById(id, pageable);
         if (byId.isPresent()){
             return byId.get();
         }
@@ -32,8 +34,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getRatingInstitutionById(Integer id) throws InstitutionNotFoundException{
-        Optional<List<Review>> byId = reviewRepository.findAllById(id);
+    public Page<Review> getRatingInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException{
+        Optional<Page<Review>> byId = reviewRepository.findAllById(id, pageable);
         if (byId.isPresent()){
             return byId.get();
         }

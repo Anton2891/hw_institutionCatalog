@@ -140,9 +140,9 @@ public class InstitutionServiceTest extends AppContextTest {
         review1.setRating(1);
 
         Review review2 = new Review();
-        review2.setReview("qqq");
+        review2.setReview("fff");
         review2.setInstitution(institution);
-        review2.setRating(1);
+        review2.setRating(2);
 
         Review review3 = new Review();
         review3.setReview("qqq");
@@ -160,7 +160,7 @@ public class InstitutionServiceTest extends AppContextTest {
     @Test
     @Transactional
     public void testN1() {
-        List<Review> allByRestaurantId = reviewRepository.findAllById(institutionWithReview.getId()).get();
+        Page<Review> allByRestaurantId = reviewRepository.findAllById(institutionWithReview.getId(), Pageable.unpaged()).get();
         for (Review e : allByRestaurantId) {
             System.out.println(e.getRating());
             System.out.println(e.getReview());

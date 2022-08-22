@@ -2,12 +2,14 @@ package com.example.hw_institutionCatalog.service;
 
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ReviewService {
-    List<Review> getReviewInstitutionById(Integer id) throws InstitutionNotFoundException;
-    List<Review> getRatingInstitutionById(Integer id) throws InstitutionNotFoundException;
+    Page<Review> getReviewInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
+    Page<Review> getRatingInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
     Review addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException;
     void refactorReviewById(Integer institutionId, String review) throws InstitutionNotFoundException;
 }

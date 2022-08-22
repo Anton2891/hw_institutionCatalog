@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 
@@ -131,5 +133,15 @@ public class InstitutionControllerTest extends AppContextTest {
                 .andDo(print()) //print response in console
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().string(result));
+    }
+
+
+
+    @Test
+    public void whenGetRequestToGetAllEndPoint_thenCorrectResponse() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/getall")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$['pageable']['paged']").value("true"));
     }
 }

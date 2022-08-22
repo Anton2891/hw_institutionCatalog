@@ -12,6 +12,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -52,9 +55,9 @@ public class ReviewServiceTest extends AppContextTest {
     @Test
     void addReview() throws InstitutionNotFoundException {
         Review review = reviewService.addReview(institutionWithReview.getId(), 6, "test_review_text");
-        List<Review> reviewTexts = reviewService.getReviewInstitutionById(review.getId());
-        assertEquals(1, reviewTexts.size());
-        assertEquals("test_review_text", reviewTexts.get(0).getReview());
+        Page<Review> reviewTexts = reviewService.getReviewInstitutionById(review.getId(), Pageable.unpaged());
+        assertEquals(1, reviewTexts.getTotalElements());
+        assertEquals("test_review_text", reviewTexts.toList().get(0).getReview());
         Assertions.assertThrows(InstitutionNotFoundException.class, () ->
                 reviewService.addReview(500, 98, "qqq"));
 
@@ -63,22 +66,22 @@ public class ReviewServiceTest extends AppContextTest {
     @Test
     void getReviewInstitutionById() throws InstitutionNotFoundException {
         Integer id = 11;
-        assertNotNull(reviewService.getReviewInstitutionById(id));
-        System.out.println(reviewService.getReviewInstitutionById(id));
+        assertNotNull(reviewService.getReviewInstitutionById(id, Pageable.unpaged()));
+        System.out.println(reviewService.getReviewInstitutionById(id, Pageable.unpaged()));
     }
 
     @Test
     void getRatingInstitutionById() throws InstitutionNotFoundException {
         Integer id = 8;
-        assertNotNull(reviewService.getRatingInstitutionById(id));
+        assertNotNull(reviewService.getRatingInstitutionById(id, Pageable.unpaged()));
     }
 
     @Test
     void refactorReviewById() throws InstitutionNotFoundException {
         Integer id = 6;
-        var oldReviews = reviewService.getReviewInstitutionById(id);
+        var oldReviews = reviewService.getReviewInstitutionById(id, Pageable.unpaged());
         reviewService.refactorReviewById(id, "new_test_review");
-        var newReviews = reviewService.getReviewInstitutionById(id);
+        var newReviews = reviewService.getReviewInstitutionById(id, Pageable.unpaged());
         assertNotSame(oldReviews, newReviews);
     }
 

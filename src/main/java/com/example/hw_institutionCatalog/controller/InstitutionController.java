@@ -41,7 +41,8 @@ public class InstitutionController {
     }
 
     @GetMapping("desk/{id}")
-    public InstitutionOutDto getDescriptionInstitutionById(@PathVariable("id") Integer id) throws InstitutionNotFoundException {
+    public InstitutionOutDto getDescriptionInstitutionById(@PathVariable("id") Integer id)
+            throws InstitutionNotFoundException {
         Institution institutionDesk = institutionService.getDescriptionInstitutionById(id);
         return mapper.mapInstitutionToInstitutionOutDto(institutionDesk);
     }
@@ -51,8 +52,9 @@ public class InstitutionController {
     public InstitutionOutDto addInstitution(@RequestParam(value = "name") String name,
                                @RequestParam(value = "address") String address,
                                @RequestParam(value = "description") String description,
-                               @RequestParam(value = "foundation_date") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate foundationDate,
-                                            @RequestParam(value = "telephone_number") String telephoneNumber)
+                               @RequestParam(value = "foundation_date")
+                               @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate foundationDate,
+                               @RequestParam(value = "telephone_number") String telephoneNumber)
             throws FoundationDateIsExpiredException, NumberParseException {
         InstitutionInDto institutionInDto = InstitutionInDto.builder()
                 .name(name)
