@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.LocalDate;
 
@@ -22,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 public class InstitutionControllerTest extends AppContextTest {
+    @Autowired
+    private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
     private InstitutionOutDto institutionOutDto;
@@ -61,7 +64,7 @@ public class InstitutionControllerTest extends AppContextTest {
 
     @Test
     void addRestaurant() throws Exception {
-        ObjectMapper objectMapper =new JsonMapper();
+//        ObjectMapper objectMapper =new JsonMapper();
 //        String afterSaveRestaurant = objectMapper.writeValueAsString(institutionOutDto);
         String afterSaveRestaurant = objectMapper.writeValueAsString(institutionOutDto);
         this.mockMvc.perform(post("/add/inst")
@@ -104,9 +107,9 @@ public class InstitutionControllerTest extends AppContextTest {
                 .andDo(print()) //print response in console
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().json("{\"name\":\"пустое имя\"," +
-                                "\"telephoneNumber\": \"телефонный номер не соответсвует формату\","
-                        //"\"telephoneNumber\": \"пустой телефонный номер\"}"
-                        + "\"foundationDate\": \"будущее\"}"
+                                "\"telephoneNumber\": \"телефонный номер не соответсвует формату\"," +
+//                        "\"telephoneNumber\": \"пустой телефонный номер\","
+                        "\"foundationDate\": \"будущее\"}"
                 ));// check status
     }
 
@@ -120,7 +123,7 @@ public class InstitutionControllerTest extends AppContextTest {
                 .telephoneNumber("+7 999 999 99 99")
                 .build();
 
-        String result = "Institution with name \"" + "test" + "\"" +
+        String result = "institution with name \"" + "test" + "\"" +
                 "has foundation date " + date;
         this.mockMvc.perform(post("/institution")
                         .contentType(MediaType.APPLICATION_JSON)

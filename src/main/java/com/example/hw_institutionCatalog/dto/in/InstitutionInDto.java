@@ -1,25 +1,22 @@
 package com.example.hw_institutionCatalog.dto.in;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
+import com.example.hw_institutionCatalog.entity.Review;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.List;
 
-@Getter
-@RequiredArgsConstructor
 @Builder
-@EqualsAndHashCode
+@Data
+@AllArgsConstructor
 public class InstitutionInDto {
-    private final Integer id;
 
     @NotBlank(message = "пустое имя")
     private final String name;
@@ -30,7 +27,9 @@ public class InstitutionInDto {
     private final String telephoneNumber;
     private final String email;
 
-    @Past(message = "будущее")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//    @Past(message = "будущее")
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate foundationDate;
+    private final List<Review> reviewList;
 }

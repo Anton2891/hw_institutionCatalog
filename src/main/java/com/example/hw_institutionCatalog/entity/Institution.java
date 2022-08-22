@@ -49,7 +49,8 @@ public class Institution {
     private LocalDate foundationDate;
 
     @OneToMany(mappedBy = "institution", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-//    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SUBSELECT)
+    @ToString.Exclude
     private List<Review> reviewList;
 
 

@@ -36,7 +36,7 @@ public class ReviewServiceTest extends AppContextTest {
                 .name(RESTAURANT_WITH_REVIEW)
                 .address("test_address_with_review")
                 .description("test_description_with_review")
-                .foundationDate(LocalDate.of(2012, 01, 01))
+                .foundationDate(LocalDate.of(2012, 1, 1))
                 .telephoneNumber("+7-926-926-92-96")
                 .build());
         String RESTAURANT_WITHOUT_REVIEW = "inst_without_rev";
@@ -51,13 +51,10 @@ public class ReviewServiceTest extends AppContextTest {
 
     @Test
     void addReview() throws InstitutionNotFoundException {
-//        String review = "review_test";
-//        Integer rating = 6;
-        Integer id = 8;
         Review review = reviewService.addReview(institutionWithReview.getId(), 6, "test_review_text");
         List<Review> reviewTexts = reviewService.getReviewInstitutionById(review.getId());
         assertEquals(1, reviewTexts.size());
-        assertEquals("test_review_text", reviewTexts.get(0));
+        assertEquals("test_review_text", reviewTexts.get(0).getReview());
         Assertions.assertThrows(InstitutionNotFoundException.class, () ->
                 reviewService.addReview(500, 98, "qqq"));
 
@@ -65,7 +62,7 @@ public class ReviewServiceTest extends AppContextTest {
 
     @Test
     void getReviewInstitutionById() throws InstitutionNotFoundException {
-        Integer id = 8;
+        Integer id = 11;
         assertNotNull(reviewService.getReviewInstitutionById(id));
         System.out.println(reviewService.getReviewInstitutionById(id));
     }

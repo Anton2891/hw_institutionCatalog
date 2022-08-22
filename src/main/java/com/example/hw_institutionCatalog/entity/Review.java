@@ -23,7 +23,6 @@ public class Review {
 
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "institution_id", nullable = false)
-    @Fetch(FetchMode.SUBSELECT)
     private Institution institution;
 
 //    @Column(name = "institution_id")

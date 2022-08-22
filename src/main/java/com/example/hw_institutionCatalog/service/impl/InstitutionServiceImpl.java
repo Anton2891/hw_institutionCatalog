@@ -8,6 +8,8 @@ import com.example.hw_institutionCatalog.mapper.InstitutionMapper;
 import com.example.hw_institutionCatalog.repository.InstitutionRepository;
 import com.example.hw_institutionCatalog.service.InstitutionService;
 import com.google.i18n.phonenumbers.NumberParseException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,9 +26,9 @@ public class InstitutionServiceImpl implements InstitutionService {
         this.institutionMapper = institutionMapper;
     }
 
-
-    public List<Institution> getAll() {
-        return institutionRepository.findAll();
+    @Override
+    public Page<Institution> getAll(Pageable pageable) {
+        return institutionRepository.findAll(pageable);
     }
 
     @Override

@@ -13,8 +13,11 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -25,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mockStatic;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class InstitutionServiceTest extends AppContextTest {
     @Autowired
     private InstitutionService institutionService;
@@ -36,7 +40,7 @@ public class InstitutionServiceTest extends AppContextTest {
 
     @Test
     void getAll() {
-        List<Institution> all = institutionService.getAll();
+        Page<Institution> all = institutionService.getAll(Pageable.unpaged());
         assertFalse(all.isEmpty());
         System.out.println(all);
     }
@@ -100,26 +104,26 @@ public class InstitutionServiceTest extends AppContextTest {
         institution.setName("test");
         institution.setFoundationDate(LocalDate.now().minusDays(3));
         institution.setTelephoneNumber("+79999999999");
-        Institution institutionSave = institutionRepository.save(institution);
+//        Institution institutionSave = institutionRepository.save(institution);
 
         Review review1 = new Review();
         review1.setReview("qqq");
-        review1.setInstitution(institutionSave);
+        review1.setInstitution(institution);
         review1.setRating(1);
 
         Review review2 = new Review();
         review2.setReview("qqq");
-        review2.setInstitution(institutionSave);
+        review2.setInstitution(institution);
         review2.setRating(1);
 
         List<Review> list = Lists.list(review1, review2);
 
-        institutionSave.setReviewList(list);
+        institution.setReviewList(list);
 
         Institution save = institutionRepository.save(institution);
         Optional<Institution> byId = institutionRepository.findById(save.getId());
         assertTrue(byId.isPresent());
-        List<Review> all = reviewRepository.findAllById(byId.get().getId()).get();
+        List<Review> all = reviewRepository.findAllByInstitutionId(byId.get().getId());
         Assertions.assertEquals(2, all.size());
     }
 
