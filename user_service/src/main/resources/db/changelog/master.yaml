@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: anton.stolyarov
+      changes:
+        - sqlFile:
+            path: \db\changelog\change_sets\V_001_create_user.sql
