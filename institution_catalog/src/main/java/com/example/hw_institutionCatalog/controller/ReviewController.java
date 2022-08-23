@@ -1,7 +1,6 @@
 package com.example.hw_institutionCatalog.controller;
 
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
-import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.mapper.ReviewMapper;
@@ -12,9 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/review")
