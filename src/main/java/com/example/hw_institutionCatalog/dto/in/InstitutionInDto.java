@@ -27,7 +27,7 @@ public class InstitutionInDto {
     private final String telephoneNumber;
     private final String email;
 
-//    @Past(message = "будущее")
+    @Past(message = "будущее")
     @DateTimeFormat(pattern = "YYYY-MM-DD")
     @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate foundationDate;

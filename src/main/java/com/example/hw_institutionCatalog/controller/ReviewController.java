@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/review")
 public class ReviewController {
     private final ReviewServiceImpl service;
 
@@ -28,7 +28,7 @@ public class ReviewController {
         this.service = service;
     }
 
-    @GetMapping("rev/{id}")
+    @GetMapping("/rev/{id}")
     public Page<ReviewOutDto> getReviewInstitutionById(@PageableDefault(sort = "name")
                                                        @PathVariable("id") Integer id, Pageable pageable)
             throws InstitutionNotFoundException {
@@ -36,15 +36,15 @@ public class ReviewController {
         return reviews.map(mapper::mapReviewToReviewOutDto);
     }
 
-    @GetMapping("rat/{id}")
-    public Page<ReviewOutDto> getRatingInstitutionById(@PageableDefault(sort = "name")
-                                                       @PathVariable("id") Integer id, Pageable pageable)
+    @GetMapping("/rat/{id}")
+    public Page<ReviewOutDto> getRatingInstitutionById(@PathVariable("id") Integer id,
+                                                       @PageableDefault(sort = "name") Pageable pageable)
             throws InstitutionNotFoundException {
         Page<Review> reviews = service.getRatingInstitutionById(id, pageable);
         return reviews.map(mapper::mapReviewToReviewOutDto);
     }
 
-    @PostMapping("add/rev")
+    @PostMapping("/add/rev")
     @ResponseStatus(HttpStatus.CREATED)
     public void addReview(@RequestParam (value = "institutionId") Integer institutionId,
             @RequestParam(value = "rating") Integer rating,
@@ -53,7 +53,7 @@ public class ReviewController {
 //        service.addReview(review.getInstitutionId(), review.getRating(), review.getReview());
     }
 
-    @PostMapping("ref/rev/{institutionId}")
+    @PostMapping("/ref/rev/{institutionId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void refactorReviewById(@RequestParam(value = "review") String review,
                                    @PathVariable Integer institutionId) throws InstitutionNotFoundException {

@@ -8,7 +8,6 @@ import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.mapper.InstitutionMapper;
 import com.example.hw_institutionCatalog.service.InstitutionService;
 import com.google.i18n.phonenumbers.NumberParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -20,13 +19,12 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/inst")
 public class InstitutionController {
     private final InstitutionService institutionService;
     private final InstitutionMapper institutionMapper;
 
-    @Autowired
-    private InstitutionMapper mapper;
+    private final InstitutionMapper mapper;
 
     public InstitutionController(InstitutionService service, InstitutionMapper institutionMapper, InstitutionMapper mapper) {
         this.institutionService = service;
@@ -34,20 +32,20 @@ public class InstitutionController {
         this.mapper = mapper;
     }
 
-    @GetMapping("getall")
+    @GetMapping("/getall")
     public Page<InstitutionOutDto> getAllInstitutions(@PageableDefault(sort = "name") Pageable pageable) {
         Page<Institution> institutions = institutionService.getAll(pageable);
         return institutions.map(institutionMapper::mapInstitutionToInstitutionOutDto);
     }
 
-    @GetMapping("desk/{id}")
+    @GetMapping("/desk/{id}")
     public InstitutionOutDto getDescriptionInstitutionById(@PathVariable("id") Integer id)
             throws InstitutionNotFoundException {
         Institution institutionDesk = institutionService.getDescriptionInstitutionById(id);
         return mapper.mapInstitutionToInstitutionOutDto(institutionDesk);
     }
 
-    @PostMapping("add/inst")
+    @PostMapping("/add/inst")
 //    @ResponseStatus(HttpStatus.CREATED)
     public InstitutionOutDto addInstitution(@RequestParam(value = "name") String name,
                                @RequestParam(value = "address") String address,
@@ -67,13 +65,13 @@ public class InstitutionController {
         return mapper.mapInstitutionToInstitutionOutDto(institution);
     }
 
-    @PostMapping("institution")
+    @PostMapping("/institution")
     public InstitutionOutDto createInstitution(@Valid @RequestBody InstitutionInDto institutionInDto) throws NumberParseException, FoundationDateIsExpiredException {
         Institution institution = institutionService.addInstitution(institutionInDto);
         return mapper.mapInstitutionToInstitutionOutDto(institution);
     }
 
-    @PostMapping("ref/inst/{id}")
+    @PostMapping("/ref/inst/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void refactorInstitutionById(@RequestParam (value = "description") String description,
                                         @PathVariable Integer id) throws InstitutionNotFoundException {
