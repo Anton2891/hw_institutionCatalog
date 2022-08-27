@@ -1,6 +1,7 @@
 package com.example.user_service.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "user_data")
 @Builder
 public class User {
 
@@ -32,6 +34,7 @@ public class User {
     private String email;
 
     @Column(name = "registration_date")
+    @CreationTimestamp
     private LocalDateTime registrationDate;
 
     @Override

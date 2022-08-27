@@ -5,3 +5,15 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: \db\changelog\change_sets\V_001_create_user.sql
+  - changeSet:
+      id: 2
+      author: anton.stolyarov
+      changes:
+        - sqlFile:
+            path: \db\changelog\change_sets\V_002_create_role.sql
+  - changeSet:
+      id: 3
+      author: anton.stolyarov
+      changes:
+        - sqlFile:
+            path: \db\changelog\change_sets\V_003_create_user_role.sql
