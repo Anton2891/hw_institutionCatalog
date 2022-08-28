@@ -3,7 +3,8 @@ package com.example.user_service.dto.out;
 import lombok.Data;
 
 @Data
-public class RoleOutDto {
+public class UserRoleOutDto {
     private Long id;
-    private String roleName;
+    private Long idUser;
+    private Long idRole;
 }

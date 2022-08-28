@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class RoleInDto {
-    private String roleName;
+public class UserRoleInDto {
+    private Long idUser;
+    private Long idRole;
 }

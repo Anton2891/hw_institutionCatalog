@@ -5,10 +5,12 @@ import com.example.user_service.dto.out.UserOutDto;
 import com.example.user_service.exception.UserNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 public interface UserController {
 
     @PostMapping("/create")
-    UserOutDto createUser(@RequestBody UserInDto userInDto);
+    UserOutDto createUser(@Valid @RequestBody UserInDto userInDto);
 
     @PutMapping("/update/{id}")
     UserOutDto updateUser(UserInDto userInDto, @PathVariable Long id) throws UserNotFoundException;

@@ -1,9 +1,18 @@
 package com.example.user_service.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.user_service.dto.in.RoleInDto;
+import com.example.user_service.dto.out.RoleOutDto;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/role")
+
 public interface RoleController {
+
+    @PostMapping("/create")
+    RoleOutDto createRole(@RequestBody RoleInDto roleInDto);
+
+    @DeleteMapping( "/delete/{id}")
+    Long deleteRole (@PathVariable Long id);
+
+//    @PostMapping("/add/user/{user_id}")
+//    String addRole(@PathVariable Long id);
 }

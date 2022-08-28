@@ -19,20 +19,26 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Basic
     @Column(name = "name")
     private String name;
 
+    @Basic
     @Column(name = "surname")
     private String surname;
 
+    @Basic
     @Column(name = "lastname")
     private String lastname;
 
+    @Basic
     @Column(name = "email")
     private String email;
 
+    @Basic
     @Column(name = "registration_date")
     @CreationTimestamp
     private LocalDateTime registrationDate;
