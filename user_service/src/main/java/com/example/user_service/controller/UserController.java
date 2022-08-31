@@ -1,5 +1,6 @@
 package com.example.user_service.controller;
 
+import com.example.user_service.dto.in.ChangePasswordInDto;
 import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
 import com.example.user_service.exception.UserNotFoundException;
@@ -20,4 +21,7 @@ public interface UserController {
 
     @GetMapping("/get/{id}")
     UserOutDto getUser(@PathVariable Long id) throws UserNotFoundException;
+
+    @PutMapping("/password")
+    void changePassword(@Valid @RequestBody ChangePasswordInDto changePasswordInDto) throws UserNotFoundException;
 }

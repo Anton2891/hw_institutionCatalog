@@ -17,3 +17,9 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: \db\changelog\change_sets\V_003_create_user_role.sql
+  - changeSet:
+      id: 4
+      author: anton.stolyarov
+      changes:
+        - sqlFile:
+            path: \db\changelog\change_sets\V_004_add_user_password_to_user.sql

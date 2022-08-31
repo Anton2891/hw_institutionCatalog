@@ -1,5 +1,6 @@
 package com.example.user_service.service.impl;
 
+import com.example.user_service.dto.in.ChangePasswordInDto;
 import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
 import com.example.user_service.entity.User;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -63,5 +65,19 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException();
         }
         return userMapper.userToUserOutDto(byId.get());
+    }
+
+    @Override
+    @Transactional
+    public void changePassword(ChangePasswordInDto changePasswordInDto) throws UserNotFoundException {
+        Optional<User> byEmail = userRepository.findByEmail(changePasswordInDto.getEmail());
+        if(byEmail.isEmpty()){
+            throw new UserNotFoundException();
+        }
+        User user = byEmail.get();
+        if(!Objects.equals(changePasswordInDto.getOldPassword(), user.getPassword())){
+            throw new UserNotFoundException();
+        }
+        user.setPassword(changePasswordInDto.getNewPassword());
     }
 }

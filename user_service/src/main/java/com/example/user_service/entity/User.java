@@ -1,11 +1,13 @@
 package com.example.user_service.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +18,7 @@ import java.util.Objects;
 @Table(name = "user_data")
 @Builder
 public class User {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +45,25 @@ public class User {
     @Column(name = "registration_date")
     @CreationTimestamp
     private LocalDateTime registrationDate;
+
+    @Basic
+    @Column(name = "password")
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = { @JoinColumn(name = "id_user") },
+            inverseJoinColumns = { @JoinColumn(name = "id_role") }
+    )
+    private Collection<Role> roles;
+
+    @PrePersist
+    public void saveDefaultPass(){
+        if(password == null){
+            password = "1234";
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

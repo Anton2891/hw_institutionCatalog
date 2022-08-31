@@ -4,9 +4,13 @@ import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
 import com.example.user_service.entity.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserOutDto userToUserOutDto(User user);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "registrationDate", ignore = true)
     User userInDtoToUser(UserInDto userInDto);
+    UserOutDto userToUserOutDto(User user);
 }
