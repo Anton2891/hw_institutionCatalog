@@ -54,10 +54,10 @@ class RoleServiceImplTest extends UserServiceApplicationTests {
                 .build();
         RoleOutDto roleOutDto = roleService.createRole(roleInDto);
         UserInDto userInDto = UserInDto.builder()
-                .name("Test1")
+                .name("Test4")
                 .surname("service")
                 .lastname("catalog")
-                .email("Test1@gmail.com")
+                .email("Test4@gmail.com")
                 .build();
         UserOutDto userOutDto = userService.createUser(userInDto);
         UserRoleInDto userRoleInDto = UserRoleInDto.builder()
@@ -75,10 +75,10 @@ class RoleServiceImplTest extends UserServiceApplicationTests {
                 .build();
         RoleOutDto roleOutDto = roleService.createRole(roleInDto);
         UserInDto userInDto = UserInDto.builder()
-                .name("Test1")
+                .name("Test5")
                 .surname("service")
                 .lastname("catalog")
-                .email("Test2@gmail.com")
+                .email("Test5@gmail.com")
                 .build();
         UserOutDto userOutDto = userService.createUser(userInDto);
         UserRoleInDto userRoleInDto = UserRoleInDto.builder()

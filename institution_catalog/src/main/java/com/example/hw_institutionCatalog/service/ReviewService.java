@@ -10,4 +10,6 @@ public interface ReviewService {
     Page<Review> getRatingInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
     Review addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException;
     void refactorReviewById(Integer institutionId, String review) throws InstitutionNotFoundException;
+
+    void deleteReviewById(Integer id);
 }

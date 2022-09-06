@@ -61,7 +61,7 @@ public class User {
     @PrePersist
     public void saveDefaultPass(){
         if(password == null){
-            password = "1234";
+            password = "TEst1234@";
         }
     }
 

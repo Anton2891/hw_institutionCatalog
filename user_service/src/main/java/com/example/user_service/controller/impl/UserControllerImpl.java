@@ -6,13 +6,10 @@ import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
 import com.example.user_service.exception.UserNotFoundException;
 import com.example.user_service.service.impl.UserServiceImpl;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
 public class UserControllerImpl implements UserController {
 
     private final UserServiceImpl userService;
@@ -52,6 +49,11 @@ public class UserControllerImpl implements UserController {
     @Override
     public UserOutDto getUser(Long id) throws UserNotFoundException {
         return userService.getUser(id);
+    }
+
+    @Override
+    public void changePassword(String email, ChangePasswordInDto changePasswordInDto) throws UserNotFoundException {
+        // надо написать реализацию
     }
 
     @Override

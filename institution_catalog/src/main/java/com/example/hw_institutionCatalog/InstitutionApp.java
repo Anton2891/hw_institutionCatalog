@@ -1,6 +1,7 @@
 package com.example.hw_institutionCatalog;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.core.Queue;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,5 +20,10 @@ public class InstitutionApp {
 	public static void main(String[] args) {
 		SpringApplication.run(InstitutionApp.class, args);
 	}
+	@Bean("myQueue")
+	public Queue myQueue() {
+		return new Queue("myQueue", false);
+	}
+
 
 }

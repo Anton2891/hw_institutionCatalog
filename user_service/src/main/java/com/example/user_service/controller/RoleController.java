@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 
-
+@RequestMapping("/role")
 public interface RoleController {
 
-    @PostMapping("/create")
+    @PostMapping
     RoleOutDto createRole(@RequestBody RoleInDto roleInDto) throws RoleNotFoundException;
 
-    @DeleteMapping( "/delete/{id}")
+    @DeleteMapping( "/{id}")
     Long deleteRole (@PathVariable Long id) throws RoleNotFoundException;
 
 //    @PostMapping("/add/user/{user_id}")

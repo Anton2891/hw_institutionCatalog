@@ -11,6 +11,7 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "registrationDate", ignore = true)
+    @Mapping(target = "roles", ignore = true)
     User userInDtoToUser(UserInDto userInDto);
     UserOutDto userToUserOutDto(User user);
 }

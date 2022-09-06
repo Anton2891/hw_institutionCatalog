@@ -1,1 +1,2 @@
-rootProject.name = 'parent_project'
+rootProject.name = 'hw_institutionCatalog'
+include("institution_catalog", "user_service")

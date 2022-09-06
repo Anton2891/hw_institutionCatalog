@@ -17,4 +17,6 @@ public class UserOutDto {
     @EqualsAndHashCode.Exclude
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime registrationDate;
+
+    private String password;
 }

@@ -49,8 +49,6 @@ public class InstitutionServiceImpl implements InstitutionService {
         return institutionRepository.save(institution);
     }
 
-
-
     @Override
     public LocalDate getFoundationDate(Integer id) throws InstitutionNotFoundException {
         Institution institutionById = getDescriptionInstitutionById(id);

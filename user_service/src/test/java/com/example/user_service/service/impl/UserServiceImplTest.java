@@ -36,6 +36,7 @@ class UserServiceImplTest extends UserServiceApplicationTests{
                 .surname("Institution service")
                 .lastname("institution catalog")
                 .email("Test2@gmail.com")
+                .password("Test@1234")
                 .build();
         UserOutDto userOutDto = userService.createUser(userInDto);
         UserOutDto userUpdate = userService.updateUser(userInDto, userOutDto.getId());

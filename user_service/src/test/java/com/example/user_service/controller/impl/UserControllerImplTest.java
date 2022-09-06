@@ -36,6 +36,7 @@ class UserControllerImplTest extends UserServiceApplicationTests {
                 .lastname("")
                 .surname("")
                 .email("dferet")
+                .password("Test123@")
                 .build();
         this.mockMvc.perform(post("/user/create")
                         .contentType(MediaType.APPLICATION_JSON)

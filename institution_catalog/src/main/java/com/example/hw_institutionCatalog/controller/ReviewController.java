@@ -17,42 +17,23 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
     private final ReviewServiceImpl service;
 
-    @Autowired
-    private ReviewMapper mapper;
-
     public ReviewController(ReviewServiceImpl service) {
         this.service = service;
     }
 
-    @GetMapping("/rev/{id}")
-    public Page<ReviewOutDto> getReviewInstitutionById(@PageableDefault(sort = "name")
-                                                       @PathVariable("id") Integer id, Pageable pageable)
-            throws InstitutionNotFoundException {
-        Page<Review> reviews = service.getReviewInstitutionById(id, pageable);
-        return reviews.map(mapper::mapReviewToReviewOutDto);
-    }
 
-    @GetMapping("/rat/{id}")
-    public Page<ReviewOutDto> getRatingInstitutionById(@PathVariable("id") Integer id,
-                                                       @PageableDefault(sort = "name") Pageable pageable)
-            throws InstitutionNotFoundException {
-        Page<Review> reviews = service.getRatingInstitutionById(id, pageable);
-        return reviews.map(mapper::mapReviewToReviewOutDto);
-    }
-
-    @PostMapping("/add/rev")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addReview(@RequestParam (value = "institutionId") Integer institutionId,
-            @RequestParam(value = "rating") Integer rating,
-            @RequestParam(value = "review") String review) throws InstitutionNotFoundException {
-        service.addReview(institutionId, rating, review);
-//        service.addReview(review.getInstitutionId(), review.getRating(), review.getReview());
-    }
-
-    @PostMapping("/ref/rev/{institutionId}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void refactorReviewById(@RequestParam(value = "review") String review,
-                                   @PathVariable Integer institutionId) throws InstitutionNotFoundException {
-        service.refactorReviewById(institutionId, review);
+                                   @PathVariable Integer id) throws InstitutionNotFoundException {
+        service.refactorReviewById(id, review);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteReviewById(@PathVariable Integer id){
+        service.deleteReviewById(id);
+    }
+
+
+
 }

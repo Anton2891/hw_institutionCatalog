@@ -72,4 +72,10 @@ public class ReviewServiceImpl implements ReviewService {
             throw new InstitutionNotFoundException(id);
         }
     }
+
+    @Override
+    public void deleteReviewById(Integer id) {
+        reviewRepository.deleteById(id);
+    }
+
 }

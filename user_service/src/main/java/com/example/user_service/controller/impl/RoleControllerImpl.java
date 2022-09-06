@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.management.relation.RoleNotFoundException;
 
 @RestController
-@RequestMapping("/role")
 public class RoleControllerImpl implements RoleController {
     private final RoleServiceImpl roleService;
 
