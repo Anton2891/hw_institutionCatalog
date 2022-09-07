@@ -9,6 +9,7 @@ import lombok.Data;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+@Schema(description = "dto to create user")
 @Data
 @Builder
 @AllArgsConstructor

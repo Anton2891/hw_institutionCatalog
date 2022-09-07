@@ -30,6 +30,7 @@ public class InstitutionControllerTest extends AppContextTest {
     @Autowired
     private MockMvc mockMvc;
     private InstitutionOutDto institutionOutDto;
+    private InstitutionInDto institutionInDto;
 
     @BeforeEach
     void beforeAddRestaurant() {
@@ -42,23 +43,21 @@ public class InstitutionControllerTest extends AppContextTest {
 //                .email("fgh@gdfd.ru")
                 .foundationDate(LocalDate.of(2011, 6, 23))
                 .build();
+        institutionInDto = InstitutionInDto.builder()
+                .name("institutionInDto")
+                .description("zzzzzzzzzzzzzzz")
+                .address("mmmmmmmmmmm2585")
+                .foundationDate(LocalDate.of(2011, 06, 23))
+                .telephoneNumber("+79996663322")
+                .build();
     }
 
     @Test
     void addRestaurant() throws Exception {
         String afterSaveRestaurant = objectMapper.writeValueAsString(institutionOutDto);
-        this.mockMvc.perform(post("/inst/add/inst")
-                        .param("name", "institutionInDto")
-                        .param("address","mmmmmmmmmmm2585")
-                        .param("description","zzzzzzzzzzzzzzz")
-                        .param("foundation_date","2011-06-23")
-                        .param("telephone_number", "+79996663322"))
-//                .contentType(MediaType.APPLICATION_JSON)
-//                        .contentType("?name=institutionInDto&address=mmmmmmmmmmm2585&description=zzzzzzzzzzzzzzz\" +\n" +
-//                                "                        \"&foundation_date=2011-6-23")
-//                .content(objectMapper.writeValueAsString("name=institutionInDto&address=mmmmmmmmmmm2585&description=zzzzzzzzzzzzzzz\" +\n" +
-//                        "                        \"&foundation_date=2011-6-23")))
-//                .content(objectMapper.writeValueAsString("institutionInDto", "")))
+        this.mockMvc.perform(post("/inst")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(institutionInDto)))
                 .andDo(print()) //print response in console
                 .andExpect(status().isOk()) // check status
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON)) // check media typeof response
@@ -67,7 +66,7 @@ public class InstitutionControllerTest extends AppContextTest {
 
     @Test
     public void institutionNotFound() throws Exception {
-        this.mockMvc.perform(get("/inst/desk/{id}", 9999))
+        this.mockMvc.perform(get("/inst/{id}", 9999))
                 .andDo(print()) //print response in console
                 .andExpect(status().isNotFound());
     }
@@ -81,7 +80,7 @@ public class InstitutionControllerTest extends AppContextTest {
                 .telephoneNumber("")
                 .build();
 
-        this.mockMvc.perform(post("/inst/institution")
+        this.mockMvc.perform(post("/inst")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print()) //print response in console
@@ -89,7 +88,7 @@ public class InstitutionControllerTest extends AppContextTest {
                 .andExpect(content().json("{\"name\":\"пустое имя\"," +
                                 "\"telephoneNumber\": \"пустой телефонный номер\"," +
 //                        "\"telephoneNumber\": \"пустой телефонный номер\","
-                        "\"foundationDate\": \"будущее\"}"
+                                "\"foundationDate\": \"будущее\"}"
                 ));// check status
     }
 
@@ -106,7 +105,7 @@ public class InstitutionControllerTest extends AppContextTest {
 
         String result = "institution with name \"" + "test" + "\"" +
                 "has foundation date " + date;
-        this.mockMvc.perform(post("/inst/institution")
+        this.mockMvc.perform(post("/inst")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print()) //print response in console
@@ -115,10 +114,9 @@ public class InstitutionControllerTest extends AppContextTest {
     }
 
 
-
     @Test
     public void whenGetRequestToGetAllEndPoint_thenCorrectResponse() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/inst/getall")
+        mockMvc.perform(MockMvcRequestBuilders.get("/inst")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$['pageable']['paged']").value("true"));

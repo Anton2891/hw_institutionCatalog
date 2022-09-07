@@ -38,7 +38,7 @@ class UserControllerImplTest extends UserServiceApplicationTests {
                 .email("dferet")
                 .password("Test123@")
                 .build();
-        this.mockMvc.perform(post("/user/create")
+        this.mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print()) //print response in console

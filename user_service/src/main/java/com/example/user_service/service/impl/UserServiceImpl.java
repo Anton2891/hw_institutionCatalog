@@ -70,8 +70,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void changePassword(ChangePasswordInDto changePasswordInDto) throws UserNotFoundException {
-        Optional<User> byEmail = userRepository.findByEmail(changePasswordInDto.getEmail());
+    public void changePassword(ChangePasswordInDto changePasswordInDto, String email) throws UserNotFoundException {
+        Optional<User> byEmail = userRepository.findByEmail(email);
         if(byEmail.isEmpty()){
             throw new UserNotFoundException();
         }

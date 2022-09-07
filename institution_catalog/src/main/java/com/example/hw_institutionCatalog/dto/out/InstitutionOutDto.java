@@ -1,11 +1,13 @@
 package com.example.hw_institutionCatalog.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Schema(description = "dto for display institution")
 @Getter
 @AllArgsConstructor
 @Builder

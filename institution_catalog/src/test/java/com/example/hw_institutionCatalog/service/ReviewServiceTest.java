@@ -28,7 +28,7 @@ public class ReviewServiceTest extends AppContextTest {
     @Autowired
     private InstitutionService institutionService;
     private Institution institutionWithReview;
-    private Institution institutionWithoutReview;
+//    private Institution institutionWithoutReview;
 
     @BeforeAll
     void setUp() throws FoundationDateIsExpiredException, NumberParseException {
@@ -41,46 +41,44 @@ public class ReviewServiceTest extends AppContextTest {
                 .telephoneNumber("+7-926-926-92-96")
                 .build());
         String RESTAURANT_WITHOUT_REVIEW = "inst_without_rev";
-        institutionWithoutReview = institutionService.addInstitution( InstitutionInDto.builder()
-                .name(RESTAURANT_WITHOUT_REVIEW)
-                .address("test_address_without_review")
-                .description("test_description_without_review")
-                .foundationDate(LocalDate.of(2011, 12, 31))
-                .telephoneNumber("+79168521213")
-                .build());
+//        institutionWithoutReview = institutionService.addInstitution( InstitutionInDto.builder()
+//                .name(RESTAURANT_WITHOUT_REVIEW)
+//                .address("test_address_without_review")
+//                .description("test_description_without_review")
+//                .foundationDate(LocalDate.of(2011, 12, 31))
+//                .telephoneNumber("+79168521213")
+//                .build());
     }
 
     @Test
     void addReview() throws InstitutionNotFoundException {
-        Review review = reviewService.addReview(institutionWithReview.getId(), 6, "test_review_text");
-        Page<Review> reviewTexts = reviewService.getReviewInstitutionById(review.getId(), Pageable.unpaged());
+        Review review = institutionService.addReview(institutionWithReview.getId(), 6, "test_review_text");
+        Page<Review> reviewTexts = institutionService.getReviewInstitutionById(review.getId(), Pageable.unpaged());
         assertEquals(1, reviewTexts.getTotalElements());
         assertEquals("test_review_text", reviewTexts.toList().get(0).getReview());
         Assertions.assertThrows(InstitutionNotFoundException.class, () ->
-                reviewService.addReview(500, 98, "qqq"));
-
+                institutionService.addReview(500, 98, "qqq"));
     }
 
     @Test
     void getReviewInstitutionById() throws InstitutionNotFoundException {
         Integer id = 11;
-        assertNotNull(reviewService.getReviewInstitutionById(id, Pageable.unpaged()));
-        System.out.println(reviewService.getReviewInstitutionById(id, Pageable.unpaged()));
+        assertNotNull(institutionService.getReviewInstitutionById(id, Pageable.unpaged()));
+        System.out.println(institutionService.getReviewInstitutionById(id, Pageable.unpaged()));
     }
 
     @Test
     void getRatingInstitutionById() throws InstitutionNotFoundException {
         Integer id = 8;
-        assertNotNull(reviewService.getRatingInstitutionById(id, Pageable.unpaged()));
+        assertNotNull(institutionService.getRatingInstitutionById(id, Pageable.unpaged()));
     }
 
     @Test
     void refactorReviewById() throws InstitutionNotFoundException {
         Integer id = 6;
-        var oldReviews = reviewService.getReviewInstitutionById(id, Pageable.unpaged());
+        var oldReviews = institutionService.getReviewInstitutionById(id, Pageable.unpaged());
         reviewService.refactorReviewById(id, "new_test_review");
-        var newReviews = reviewService.getReviewInstitutionById(id, Pageable.unpaged());
+        var newReviews = institutionService.getReviewInstitutionById(id, Pageable.unpaged());
         assertNotSame(oldReviews, newReviews);
     }
-
 }

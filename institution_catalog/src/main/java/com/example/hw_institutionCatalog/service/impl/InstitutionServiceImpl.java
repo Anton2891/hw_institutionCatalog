@@ -2,10 +2,12 @@ package com.example.hw_institutionCatalog.service.impl;
 
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.entity.Institution;
+import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.mapper.InstitutionMapper;
 import com.example.hw_institutionCatalog.repository.InstitutionRepository;
+import com.example.hw_institutionCatalog.repository.ReviewRepository;
 import com.example.hw_institutionCatalog.service.InstitutionService;
 import com.google.i18n.phonenumbers.NumberParseException;
 import org.springframework.data.domain.Page;
@@ -18,10 +20,12 @@ import java.util.Optional;
 @Service
 public class InstitutionServiceImpl implements InstitutionService {
     private final InstitutionRepository institutionRepository;
+    private final ReviewRepository reviewRepository;
     private final InstitutionMapper institutionMapper;
 
-    public InstitutionServiceImpl(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper) {
+    public InstitutionServiceImpl(InstitutionRepository institutionRepository, ReviewRepository reviewRepository, InstitutionMapper institutionMapper) {
         this.institutionRepository = institutionRepository;
+        this.reviewRepository = reviewRepository;
         this.institutionMapper = institutionMapper;
     }
 
@@ -65,5 +69,43 @@ public class InstitutionServiceImpl implements InstitutionService {
         } else {
             throw new InstitutionNotFoundException(id);
         }
+    }
+
+    @Override
+    public Page<Review> getReviewInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException {
+        Optional<Page<Review>> byId = reviewRepository.findAllById(id, pageable);
+        if (byId.isPresent()){
+            return byId.get();
+        }
+        throw new InstitutionNotFoundException(id);
+    }
+
+    @Override
+    public Page<Review> getRatingInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException{
+        Optional<Page<Review>> byId = reviewRepository.findAllById(id, pageable);
+        if (byId.isPresent()){
+            return byId.get();
+        }
+        throw new InstitutionNotFoundException(id);
+    }
+
+    @Override
+    public Review addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException {
+        Optional<Institution> byId = institutionRepository.findById(institutionId);
+        if (byId.isEmpty()){
+            throw new InstitutionNotFoundException(institutionId);
+        }
+        Institution institution = byId.get();
+        Review review1 = Review.builder()
+                .institution(institution)
+                .rating(rating)
+                .review(review)
+                .build();
+        return reviewRepository.save(review1);
+//        Review review1 = Review.builder()
+//                .institutionId(institutionId)
+//                .rating(rating)
+//                .review(review).build();
+//        reviewRepository.save(review1);
     }
 }

@@ -15,31 +15,69 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public interface UserController {
 
-    @PostMapping
-    UserOutDto createUser(@Valid @RequestBody UserInDto userInDto);
-
-    @PutMapping("/{id}")
-    UserOutDto updateUser(@RequestBody UserInDto userInDto, @PathVariable Long id) throws UserNotFoundException;
-
-
-    @DeleteMapping("/{id}")
-    Long deleteUser(@PathVariable Long id) throws UserNotFoundException;
-
+    @Operation(summary = "Create user")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Found the users")
+                    description = "User is create"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User is not create"
+            )
     })
+    @PostMapping
+    UserOutDto createUser(@Valid @RequestBody UserInDto userInDto);
 
+    @Operation(summary = "Update user by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User is update"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User is not update"
+            )
+    })
+    @PutMapping("/{id}")
+    UserOutDto updateUser(@RequestBody UserInDto userInDto, @PathVariable Long id) throws UserNotFoundException;
 
-            @Operation(summary = "Gets all users")
+    @Operation(summary = "Delete user by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User is delete"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found"
+            )
+    })
+    @DeleteMapping("/{id}")
+    Long deleteUser(@PathVariable Long id) throws UserNotFoundException;
+
+    @Operation(summary = "Get user by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Found the users"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found"
+            )
+    })
     @GetMapping("/{id}")
     UserOutDto getUser(@PathVariable Long id) throws UserNotFoundException;
 
-//    @PutMapping("/password")
-//    void changePassword(@Valid @PathVariable String email @RequestBody ChangePasswordInDto changePasswordInDto) throws UserNotFoundException;
-
+    @Operation(summary = "Change password by user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "password is update"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "password is not valid"
+            )
+    })
     @PutMapping("/{email}/password")
-    void changePassword(@PathVariable String email,@Valid @RequestBody ChangePasswordInDto changePasswordInDto) throws UserNotFoundException;
-
+    void changePassword(@PathVariable String email,@Valid @RequestBody ChangePasswordInDto changePasswordInDto)
+            throws UserNotFoundException;
 }

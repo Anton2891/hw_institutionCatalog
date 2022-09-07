@@ -5,20 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@Schema(description = "dto to appdate password ")
+@Schema(description = "dto to update password")
 @Data
 @Builder
 @AllArgsConstructor
 public class ChangePasswordInDto {
-//    @NotBlank(message = "email is empty")
-//    private String email;
 
-    @Schema (description = "bla-bla")
+    @Schema (description = "old password")
     @NotBlank(message = "old password is empty")
     private String oldPassword;
 

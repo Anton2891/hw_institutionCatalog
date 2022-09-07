@@ -15,50 +15,9 @@ import java.util.Optional;
 @Service
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
-    private final InstitutionRepository institutionRepository;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository, InstitutionRepository institutionRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
-        this.institutionRepository = institutionRepository;
-    }
-
-
-    @Override
-    public Page<Review> getReviewInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException {
-        Optional<Page<Review>> byId = reviewRepository.findAllById(id, pageable);
-        if (byId.isPresent()){
-            return byId.get();
-        }
-        throw new InstitutionNotFoundException(id);
-    }
-
-    @Override
-    public Page<Review> getRatingInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException{
-        Optional<Page<Review>> byId = reviewRepository.findAllById(id, pageable);
-        if (byId.isPresent()){
-            return byId.get();
-        }
-        throw new InstitutionNotFoundException(id);
-    }
-
-    @Override
-    public Review addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException {
-        Optional<Institution> byId = institutionRepository.findById(institutionId);
-        if (byId.isEmpty()){
-            throw new InstitutionNotFoundException(institutionId);
-        }
-        Institution institution = byId.get();
-        Review review1 = Review.builder()
-                .institution(institution)
-                .rating(rating)
-                .review(review)
-                .build();
-        return reviewRepository.save(review1);
-//        Review review1 = Review.builder()
-//                .institutionId(institutionId)
-//                .rating(rating)
-//                .review(review).build();
-//        reviewRepository.save(review1);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.hw_institutionCatalog.dto.in;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.List;
 
+@Schema(description = "dto for create institution")
 @Builder
 @Data
 @AllArgsConstructor

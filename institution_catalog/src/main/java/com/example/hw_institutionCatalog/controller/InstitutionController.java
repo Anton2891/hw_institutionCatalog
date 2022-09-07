@@ -3,92 +3,118 @@ package com.example.hw_institutionCatalog.controller;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
-import com.example.hw_institutionCatalog.entity.Institution;
-import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
-import com.example.hw_institutionCatalog.mapper.InstitutionMapper;
-import com.example.hw_institutionCatalog.mapper.ReviewMapper;
-import com.example.hw_institutionCatalog.service.InstitutionService;
-import com.example.hw_institutionCatalog.service.ReviewService;
 import com.google.i18n.phonenumbers.NumberParseException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
 @RequestMapping("/inst")
-public class InstitutionController {
-    private final InstitutionService institutionService;
-    private final ReviewService reviewService;
-    private final InstitutionMapper institutionMapper;
-    private final ReviewMapper reviewMapper;
-
-    private final InstitutionMapper mapper;
-
-    public InstitutionController(InstitutionService service, ReviewService reviewService, InstitutionMapper institutionMapper, ReviewMapper reviewMapper, InstitutionMapper mapper) {
-        this.institutionService = service;
-        this.reviewService = reviewService;
-        this.institutionMapper = institutionMapper;
-        this.reviewMapper = reviewMapper;
-        this.mapper = mapper;
-    }
-
+public interface InstitutionController {
+    @Operation(summary = "Gets all institutions")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "ok"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "false"
+            )
+    })
     @GetMapping
-    public Page<InstitutionOutDto> getAllInstitutions(@PageableDefault(sort = "name") Pageable pageable) {
-        Page<Institution> institutions = institutionService.getAll(pageable);
-        return institutions.map(institutionMapper::mapInstitutionToInstitutionOutDto);
-    }
+    Page<InstitutionOutDto> getAllInstitutions(@PageableDefault(sort = "name") Pageable pageable);
 
+    @Operation(summary = "Get description institution by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "ok"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "false"
+            )
+    })
     @GetMapping("/{id}")
-    public InstitutionOutDto getDescriptionInstitutionById(@PathVariable("id") Integer id)
-            throws InstitutionNotFoundException {
-        Institution institutionDesk = institutionService.getDescriptionInstitutionById(id);
-        return mapper.mapInstitutionToInstitutionOutDto(institutionDesk);
-    }
+    InstitutionOutDto getDescriptionInstitutionById(@PathVariable("id") Integer id)
+            throws InstitutionNotFoundException;
 
+    @Operation(summary = "Create institution")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "ok"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "false"
+            )
+    })
     @PostMapping
-    public InstitutionOutDto createInstitution(@Valid @RequestBody InstitutionInDto institutionInDto) throws NumberParseException, FoundationDateIsExpiredException {
-        Institution institution = institutionService.addInstitution(institutionInDto);
-        return mapper.mapInstitutionToInstitutionOutDto(institution);
-    }
+    InstitutionOutDto createInstitution(@Valid @RequestBody InstitutionInDto institutionInDto)
+            throws NumberParseException, FoundationDateIsExpiredException;
 
+    @Operation(summary = "Refactor description for institution by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "ok"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "false"
+            )
+    })
     @PutMapping("/{id}/description")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void refactorInstitutionById(@RequestParam (value = "description") String description,
-                                        @PathVariable Integer id) throws InstitutionNotFoundException {
-        institutionService.refactorInstitutionById(id, description);
+    void refactorInstitutionById(@RequestParam (value = "description") String description,
+                                 @PathVariable Integer id) throws InstitutionNotFoundException;
 
-    }
-
+    @Operation(summary = "Get review for institution by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "ok"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "false"
+            )
+    })
     @GetMapping("/{id}/reviews")
-    public Page<ReviewOutDto> getReviewInstitutionById(@PageableDefault(sort = "name")
-                                                       @PathVariable("id") Integer id, Pageable pageable)
-            throws InstitutionNotFoundException {
-        Page<Review> reviews = reviewService.getReviewInstitutionById(id, pageable);
-        return reviews.map(reviewMapper::mapReviewToReviewOutDto);
-    }
+    Page<ReviewOutDto> getReviewInstitutionById(@PageableDefault(sort = "name")
+                                                @PathVariable("id") Integer id, Pageable pageable)
+            throws InstitutionNotFoundException;
 
+    @Operation(summary = "Get rating for institution by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "ok"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "false"
+            )
+    })
     @GetMapping("/{id}/rating")
-    public Double getRatingInstitutionById(@PathVariable("id") Integer id,
-                                                       @PageableDefault(sort = "name") Pageable pageable)
-            throws InstitutionNotFoundException {
-        Page<Review> reviews = reviewService.getRatingInstitutionById(id, pageable);
-        return 0.5;
-    }
+    Double getRatingInstitutionById(@PathVariable("id") Integer id,
+                                    @PageableDefault(sort = "name") Pageable pageable)
+            throws InstitutionNotFoundException;
 
+    @Operation(summary = "Add review for institution by id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "ok"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "false"
+            )
+    })
     @PostMapping("/{id}/review")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addReview(@PathVariable Integer id,
-                          @RequestParam(value = "rating") Integer rating,
-                          @RequestParam(value = "review") String review) throws InstitutionNotFoundException {
-        reviewService.addReview(id, rating, review);
-//        service.addReview(review.getInstitutionId(), review.getRating(), review.getReview());
-    }
-
-
+    void addReview(@PathVariable Integer id,
+                   @RequestParam(value = "rating") Integer rating,
+                   @RequestParam(value = "review") String review) throws InstitutionNotFoundException;
 }

@@ -3,6 +3,7 @@ package com.example.hw_institutionCatalog.service;
 
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.entity.Institution;
+import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -17,6 +18,9 @@ public interface InstitutionService {
     Institution addInstitution(InstitutionInDto institutionInDto/*String name, String address, String description,LocalDate foundationDate*/) throws FoundationDateIsExpiredException, NumberParseException;
     LocalDate getFoundationDate(Integer id) throws InstitutionNotFoundException;
     void refactorInstitutionById(Integer id, String description) throws InstitutionNotFoundException;
+    Page<Review> getReviewInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
+    Page<Review> getRatingInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
+    Review addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException;
 
 
 }

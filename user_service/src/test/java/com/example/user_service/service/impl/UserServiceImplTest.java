@@ -4,8 +4,6 @@ import com.example.user_service.UserServiceApplicationTests;
 import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
 import com.example.user_service.exception.UserNotFoundException;
-import com.example.user_service.service.UserService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

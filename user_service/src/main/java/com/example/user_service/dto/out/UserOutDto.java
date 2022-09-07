@@ -1,11 +1,13 @@
 package com.example.user_service.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "dto for display user")
 @Data
 public class UserOutDto {
     private Long id;
