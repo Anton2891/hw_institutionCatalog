@@ -41,3 +41,9 @@ databaseChangeLog:
         changes:
           - sqlFile:
               path: \db\changelog\change_sets\V_007_add_email_to_institution.sql
+    - changeSet:
+        id: 8
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_008_add_owner_id_to_institution.sql

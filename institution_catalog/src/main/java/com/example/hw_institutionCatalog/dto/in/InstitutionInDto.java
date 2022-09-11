@@ -32,4 +32,5 @@ public class InstitutionInDto {
     @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate foundationDate;
     private final List<Review> reviewList;
+    private final Integer ownerId;
 }

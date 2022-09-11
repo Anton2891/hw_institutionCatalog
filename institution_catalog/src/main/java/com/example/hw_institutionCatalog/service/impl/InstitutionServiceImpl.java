@@ -1,5 +1,8 @@
 package com.example.hw_institutionCatalog.service.impl;
 
+import com.example.hw_institutionCatalog.dto.in.AddOwnerInDto;
+import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
+import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
@@ -13,8 +16,10 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -107,5 +112,52 @@ public class InstitutionServiceImpl implements InstitutionService {
 //                .rating(rating)
 //                .review(review).build();
 //        reviewRepository.save(review1);
+    }
+
+    @Override
+    @Transactional
+    public void deleteOwner(DeleteOwnerInDto deleteOwnerInDto) throws InstitutionNotFoundException {
+        Integer ownerId = deleteOwnerInDto.getOwnerId();
+        List<Institution> institutionList = getInstitutionByOwnerId(ownerId);
+        for (Institution i: institutionList) {
+            Integer id = i.getId();
+            Optional<Institution> byId = institutionRepository.findById(id);
+            if(byId.isEmpty()){
+                throw  new InstitutionNotFoundException(id);
+            }
+            byId.get().setOwnerId(null);
+        }
+    }
+
+    @Override
+    public List<Institution> getInstitutionByOwnerId(Integer ownerId) throws InstitutionNotFoundException {
+        Optional<List<Institution>> byOwnerId = institutionRepository.findAllByOwnerId(ownerId);
+        if(byOwnerId.isEmpty()){
+            throw new InstitutionNotFoundException(ownerId);
+        }
+        return byOwnerId.get();
+    }
+
+    @Override
+    public void addOwner(AddOwnerInDto addOwnerInDto) throws InstitutionNotFoundException {
+        Optional<Institution> byId = institutionRepository.findById(addOwnerInDto.getInstitutionId());
+        if(byId.isEmpty()){
+            throw new InstitutionNotFoundException(addOwnerInDto.getInstitutionId());
+        }
+        byId.get().setOwnerId(addOwnerInDto.getOwnerId());
+    }
+
+    @Override
+    public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException {
+        Integer ownerId = changeOwnerInDto.getOldOwnerId();
+        List<Institution> institutionList = getInstitutionByOwnerId(ownerId);
+        for (Institution i: institutionList) {
+            Integer id = i.getId();
+            Optional<Institution> byId = institutionRepository.findById(id);
+            if(byId.isEmpty()){
+                throw  new InstitutionNotFoundException(id);
+            }
+            byId.get().setOwnerId(changeOwnerInDto.getNewOwnerId());
+        }
     }
 }

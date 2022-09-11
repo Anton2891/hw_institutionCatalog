@@ -1,6 +1,9 @@
 package com.example.hw_institutionCatalog.controller.impl;
 
 import com.example.hw_institutionCatalog.controller.InstitutionController;
+import com.example.hw_institutionCatalog.dto.in.AddOwnerInDto;
+import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
+import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
@@ -79,5 +82,20 @@ public class InstitutionControllerImpl implements InstitutionController {
     @Override
     public void addReview(Integer id, Integer rating, String review) throws InstitutionNotFoundException {
         institutionService.addReview(id, rating, review);
+    }
+
+    @Override
+    public void deleteOwner(DeleteOwnerInDto deleteOwnerInDto) throws InstitutionNotFoundException {
+        institutionService.deleteOwner(deleteOwnerInDto);
+    }
+
+    @Override
+    public void addOwner(AddOwnerInDto addOwnerInDto) throws InstitutionNotFoundException {
+        institutionService.addOwner(addOwnerInDto);
+    }
+
+    @Override
+    public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException{
+        institutionService.changeOwner(changeOwnerInDto);
     }
 }

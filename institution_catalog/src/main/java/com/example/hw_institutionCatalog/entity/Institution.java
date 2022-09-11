@@ -25,6 +25,10 @@ public class Institution {
     private Integer id;
 
     @Basic
+    @Column(name = "owner_id")
+    private Integer ownerId;
+
+    @Basic
     @Column(name = "name")
     private String name;
 

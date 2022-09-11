@@ -22,4 +22,5 @@ public class InstitutionOutDto{
     private final LocalDate foundationDate;
     private final String telephoneNumber;
     private final List<ReviewOutDto> reviewList;
+    private final Integer ownerId;
 }

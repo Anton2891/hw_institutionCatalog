@@ -1,5 +1,6 @@
 package com.example.user_service.controller;
 
+import com.example.user_service.dto.in.ChangeOwnerInDto;
 import com.example.user_service.dto.in.ChangePasswordInDto;
 import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
@@ -53,6 +54,19 @@ public interface UserController {
     })
     @DeleteMapping("/{id}")
     Long deleteUser(@PathVariable Long id) throws UserNotFoundException;
+
+    @Operation(summary = "Change owner to InstitutionDB")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Found the users"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found"
+            )
+    })
+    @PutMapping("owner")
+    void changeOwner(@RequestBody ChangeOwnerInDto changeOwnerInDto);
 
     @Operation(summary = "Get user by id")
     @ApiResponses(value = {

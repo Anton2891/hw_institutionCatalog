@@ -1,6 +1,7 @@
 package com.example.hw_institutionCatalog.service;
 
 import com.example.hw_institutionCatalog.AppContextTest;
+import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +93,31 @@ public class InstitutionServiceTest extends AppContextTest {
         institutionService.refactorInstitutionById(id, description);
         String newDescription = institutionService.getDescriptionInstitutionById(id).getDescription();
         assertNotEquals(oldDescription, newDescription);
+    }
+
+    @Test
+    void deleteOwner() throws FoundationDateIsExpiredException, NumberParseException, InstitutionNotFoundException {
+        InstitutionInDto institutionInDto1 = InstitutionInDto.builder()
+                .name("Test1")
+                .telephoneNumber("+79999999999")
+                .address("zzzzzzzzzzzzz")
+                .foundationDate(LocalDate.of(2016, 01, 07))
+                .ownerId(15)
+                .build();
+        institutionService.addInstitution(institutionInDto1);
+        InstitutionInDto institutionInDto2 = InstitutionInDto.builder()
+                .name("Test2")
+                .telephoneNumber("+79999999999")
+                .address("zzzzzzzzzzzzz")
+                .foundationDate(LocalDate.of(2015, 01, 07))
+                .ownerId(15)
+                .build();
+        institutionService.addInstitution(institutionInDto2);
+        DeleteOwnerInDto deleteOwnerInDto = new DeleteOwnerInDto();
+        deleteOwnerInDto.setOwnerId(15);
+        assertEquals(2, institutionService.getInstitutionByOwnerId(15).size());
+        institutionService.deleteOwner(deleteOwnerInDto);
+        assertEquals(0, institutionService.getInstitutionByOwnerId(15).size());
     }
 
     /**

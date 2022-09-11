@@ -1,5 +1,8 @@
 package com.example.hw_institutionCatalog.controller;
 
+import com.example.hw_institutionCatalog.dto.in.AddOwnerInDto;
+import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
+import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
@@ -117,4 +120,43 @@ public interface InstitutionController {
     void addReview(@PathVariable Integer id,
                    @RequestParam(value = "rating") Integer rating,
                    @RequestParam(value = "review") String review) throws InstitutionNotFoundException;
+
+    @Operation(summary = "delete owner")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Found the users"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found"
+            )
+    })
+    @DeleteMapping("/owner")
+    void deleteOwner(@RequestBody DeleteOwnerInDto deleteOwnerInDto) throws InstitutionNotFoundException;
+
+    @Operation(summary = "add owner")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Found the users"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found"
+            )
+    })
+    @PostMapping("/owner")
+    void addOwner(@RequestBody AddOwnerInDto addOwnerInDto) throws InstitutionNotFoundException;
+
+    @Operation(summary = "change owner")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Found the users"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found"
+            )
+    })
+    @PostMapping("/owner/change")
+    void changeOwner(@RequestBody ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException;
 }
