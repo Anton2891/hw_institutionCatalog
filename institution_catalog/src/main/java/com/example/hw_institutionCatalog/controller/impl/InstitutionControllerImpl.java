@@ -6,6 +6,7 @@ import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
+import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
@@ -14,15 +15,14 @@ import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.mapper.InstitutionMapper;
 import com.example.hw_institutionCatalog.mapper.ReviewMapper;
 import com.example.hw_institutionCatalog.service.InstitutionService;
-import com.example.hw_institutionCatalog.service.ReviewService;
 import com.google.i18n.phonenumbers.NumberParseException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class InstitutionControllerImpl implements InstitutionController {
@@ -98,4 +98,16 @@ public class InstitutionControllerImpl implements InstitutionController {
     public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException{
         institutionService.changeOwner(changeOwnerInDto);
     }
+
+    @Override
+    public List<InstitutionSmallOutDto> getSmallList() {
+        Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Order.by("average")));
+        return institutionService.getSmallList(pageable);
+    }
+
+    @Override
+    public void deleteInstitutionById(Integer id) {
+        institutionService.deleteInstitutionById(id);
+    }
+
 }

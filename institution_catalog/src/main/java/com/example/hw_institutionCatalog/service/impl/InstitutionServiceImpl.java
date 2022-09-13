@@ -4,6 +4,7 @@ import com.example.hw_institutionCatalog.dto.in.AddOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
+import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
@@ -14,7 +15,9 @@ import com.example.hw_institutionCatalog.repository.ReviewRepository;
 import com.example.hw_institutionCatalog.service.InstitutionService;
 import com.google.i18n.phonenumbers.NumberParseException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -147,17 +150,30 @@ public class InstitutionServiceImpl implements InstitutionService {
         byId.get().setOwnerId(addOwnerInDto.getOwnerId());
     }
 
+    //TODO два варианта
     @Override
+    @Transactional
     public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException {
-        Integer ownerId = changeOwnerInDto.getOldOwnerId();
-        List<Institution> institutionList = getInstitutionByOwnerId(ownerId);
-        for (Institution i: institutionList) {
-            Integer id = i.getId();
-            Optional<Institution> byId = institutionRepository.findById(id);
-            if(byId.isEmpty()){
-                throw  new InstitutionNotFoundException(id);
-            }
-            byId.get().setOwnerId(changeOwnerInDto.getNewOwnerId());
-        }
+//        Integer ownerId = changeOwnerInDto.getOldOwnerId();
+//        List<Institution> institutionList = getInstitutionByOwnerId(ownerId);
+//        for (Institution i: institutionList) {
+//            Integer id = i.getId();
+//            Optional<Institution> byId = institutionRepository.findById(id);
+//            if(byId.isEmpty()){
+//                throw  new InstitutionNotFoundException(id);
+//            }
+//            byId.get().setOwnerId(changeOwnerInDto.getNewOwnerId());
+//        }
+        institutionRepository.updateUserSetStatusForName(changeOwnerInDto.getNewOwnerId(), changeOwnerInDto.getOldOwnerId());
+    }
+
+    @Override
+    public List<InstitutionSmallOutDto> getSmallList(Pageable pageable) {
+        return institutionMapper.institutionToInstitutionSmallOutDto(institutionRepository.findSmallInstitutions(pageable));
+    }
+
+    @Override
+    public void deleteInstitutionById(Integer id) {
+        institutionRepository.deleteById(id);
     }
 }

@@ -23,6 +23,7 @@ public class Review {
     @JoinColumn(name = "institution_id", nullable = false)
     private Institution institution;
 
+    //TODO колонка возможно не нужна
 //    @Column(name = "institution_id")
 //    private Integer institutionId;
 

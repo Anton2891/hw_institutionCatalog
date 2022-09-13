@@ -2,13 +2,17 @@ package com.example.hw_institutionCatalog.mapper;
 
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
+import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
+import com.example.hw_institutionCatalog.repository.data.InstitutionSmall;
 import com.google.i18n.phonenumbers.NumberParseException;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class InstitutionMapper {
@@ -26,4 +30,6 @@ public abstract class InstitutionMapper {
     ReviewOutDto reviewToReviewOutDto(Review review){
         return reviewMapper.mapReviewToReviewOutDto(review);
     }
+
+    public abstract List<InstitutionSmallOutDto> institutionToInstitutionSmallOutDto(List<InstitutionSmall> institutionSmalls);
 }

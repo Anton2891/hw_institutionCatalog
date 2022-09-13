@@ -16,7 +16,7 @@ public class RabbitChangeOwner {
         this.institutionService = institutionService;
     }
 
-    @RabbitListener(queues = "myQueueChangeOwner")
+    @RabbitListener(queues = "myQueue")
     private void rabbit(@Payload ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException {
         System.out.println("change user " + "deleteOwnerInDto");
         institutionService.changeOwner(changeOwnerInDto);

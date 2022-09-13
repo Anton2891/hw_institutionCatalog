@@ -50,13 +50,13 @@ public class UserControllerImpl implements UserController {
     public Long deleteUser(Long id) throws UserNotFoundException {
         Long idDell = userService.deleteUser(id);
 //        rabbitTemplate.convertAndSend("myQueue", new DeletedOwnerOutDto(id));
-        rabbitTemplate.convertSendAndReceive("myQueueDeleteOwner", new DeletedOwnerOutDto(id), DeletedOwnerOutDto.class);
+        rabbitTemplate.convertSendAndReceive("myQueue", new DeletedOwnerOutDto(id), DeletedOwnerOutDto.class);
         return idDell;
     }
 
     @Override
     public void changeOwner(ChangeOwnerInDto changeOwnerInDto){
-        rabbitTemplate.convertSendAndReceive("myQueueChangeOwner",
+        rabbitTemplate.convertSendAndReceive("myQueue",
                 new ChangeOwnerOutDto(changeOwnerInDto.getOldOwnerId(),
                         changeOwnerInDto.getNewOwnerId()), ChangeOwnerOutDto.class);
     }

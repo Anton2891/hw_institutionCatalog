@@ -5,6 +5,7 @@ import com.example.hw_institutionCatalog.dto.in.AddOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
+import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
@@ -31,4 +32,8 @@ public interface InstitutionService {
     void addOwner(AddOwnerInDto addOwnerInDto) throws InstitutionNotFoundException;
 
     void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException;
+
+    List<InstitutionSmallOutDto> getSmallList(Pageable pageable);
+
+    void deleteInstitutionById(Integer id);
 }

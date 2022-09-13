@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.example.hw_institutionCatalog.repository")
+//@EnableFindClient
 public class InstitutionApp {
 	@Bean
 	ObjectMapper objectMapper() {

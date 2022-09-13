@@ -5,9 +5,11 @@ import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
+import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import com.example.hw_institutionCatalog.repository.data.InstitutionSmall;
 import com.google.i18n.phonenumbers.NumberParseException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,6 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequestMapping("/inst")
 public interface InstitutionController {
@@ -159,4 +162,11 @@ public interface InstitutionController {
     })
     @PostMapping("/owner/change")
     void changeOwner(@RequestBody ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException;
+
+    @GetMapping("/smallList")
+    List<InstitutionSmallOutDto> getSmallList();
+
+    @DeleteMapping("/{id}")
+    void deleteInstitutionById(@PathVariable Integer id);
+
 }

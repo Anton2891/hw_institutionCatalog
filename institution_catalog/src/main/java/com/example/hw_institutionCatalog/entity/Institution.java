@@ -1,23 +1,28 @@
 package com.example.hw_institutionCatalog.entity;
 
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "institution")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "institution")
+//@SQLDelete(sql = "UPDATE institution SET deleted = true WHERE id=?")
+//@Where(clause = "deleted=false")
 public class Institution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +56,10 @@ public class Institution {
     @Basic
     @Column(name = "foundation_date")
     private LocalDate foundationDate;
+
+//    @UpdateTimestamp
+//    @Column(name = "update_datetime")
+//    private LocalDateTime updateDateTime;
 
     @OneToMany(mappedBy = "institution", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
