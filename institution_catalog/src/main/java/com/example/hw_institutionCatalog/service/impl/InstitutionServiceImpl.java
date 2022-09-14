@@ -1,5 +1,6 @@
 package com.example.hw_institutionCatalog.service.impl;
 
+import com.example.hw_institutionCatalog.clients.UserServiceClients;
 import com.example.hw_institutionCatalog.dto.in.AddOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
@@ -15,9 +16,8 @@ import com.example.hw_institutionCatalog.repository.ReviewRepository;
 import com.example.hw_institutionCatalog.service.InstitutionService;
 import com.google.i18n.phonenumbers.NumberParseException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,11 +30,13 @@ public class InstitutionServiceImpl implements InstitutionService {
     private final InstitutionRepository institutionRepository;
     private final ReviewRepository reviewRepository;
     private final InstitutionMapper institutionMapper;
+//    private final UserServiceClients userServiceClients;
 
-    public InstitutionServiceImpl(InstitutionRepository institutionRepository, ReviewRepository reviewRepository, InstitutionMapper institutionMapper) {
+    public InstitutionServiceImpl(InstitutionRepository institutionRepository, ReviewRepository reviewRepository, InstitutionMapper institutionMapper/*, UserServiceClients userServiceClients*/) {
         this.institutionRepository = institutionRepository;
         this.reviewRepository = reviewRepository;
         this.institutionMapper = institutionMapper;
+//        this.userServiceClients = userServiceClients;
     }
 
     @Override
@@ -150,9 +152,9 @@ public class InstitutionServiceImpl implements InstitutionService {
         byId.get().setOwnerId(addOwnerInDto.getOwnerId());
     }
 
-    //TODO два варианта
+    //TODO два варианта, создать эксепшен для owner
     @Override
-    @Transactional
+//    @Transactional
     public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException {
 //        Integer ownerId = changeOwnerInDto.getOldOwnerId();
 //        List<Institution> institutionList = getInstitutionByOwnerId(ownerId);
@@ -164,6 +166,13 @@ public class InstitutionServiceImpl implements InstitutionService {
 //            }
 //            byId.get().setOwnerId(changeOwnerInDto.getNewOwnerId());
 //        }
+
+        //после добавления этого всё сломалось
+//        if(userServiceClients.getUser(changeOwnerInDto.getNewOwnerId())
+//                .getStatusCode().equals(HttpStatus.NOT_FOUND)){
+//            throw new RuntimeException();
+//        }
+
         institutionRepository.updateUserSetStatusForName(changeOwnerInDto.getNewOwnerId(), changeOwnerInDto.getOldOwnerId());
     }
 
@@ -173,7 +182,12 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public void deleteInstitutionById(Integer id) {
+    @Transactional
+    public void deleteInstitutionById(Integer id) throws InstitutionNotFoundException{
+        Optional<Institution> byId = institutionRepository.findById(id);
+        if(byId.isEmpty()){
+            throw new InstitutionNotFoundException(id);
+        }
         institutionRepository.deleteById(id);
     }
 }

@@ -21,8 +21,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Table(name = "institution")
-//@SQLDelete(sql = "UPDATE institution SET deleted = true WHERE id=?")
-//@Where(clause = "deleted=false")
+@SQLDelete(sql = "UPDATE institution SET is_deleted = true WHERE id=?")
+@Where(clause = "is_deleted=false")
 public class Institution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,14 +57,17 @@ public class Institution {
     @Column(name = "foundation_date")
     private LocalDate foundationDate;
 
-//    @UpdateTimestamp
-//    @Column(name = "update_datetime")
-//    private LocalDateTime updateDateTime;
+    @UpdateTimestamp
+    @Column(name = "update_datetime")
+    private LocalDateTime updateDateTime;
 
     @OneToMany(mappedBy = "institution", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @ToString.Exclude
     private List<Review> reviewList;
+
+    @Column(name = "is_deleted")
+    private boolean idDeleted = false;
 
     @Override
     public boolean equals(Object o) {

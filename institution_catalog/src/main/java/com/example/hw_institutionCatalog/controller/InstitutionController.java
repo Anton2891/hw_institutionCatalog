@@ -167,6 +167,6 @@ public interface InstitutionController {
     List<InstitutionSmallOutDto> getSmallList();
 
     @DeleteMapping("/{id}")
-    void deleteInstitutionById(@PathVariable Integer id);
+    void deleteInstitutionById(@PathVariable Integer id) throws InstitutionNotFoundException;
 
 }

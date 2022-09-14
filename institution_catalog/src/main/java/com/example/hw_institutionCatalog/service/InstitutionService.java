@@ -35,5 +35,5 @@ public interface InstitutionService {
 
     List<InstitutionSmallOutDto> getSmallList(Pageable pageable);
 
-    void deleteInstitutionById(Integer id);
+    void deleteInstitutionById(Integer id) throws InstitutionNotFoundException;
 }

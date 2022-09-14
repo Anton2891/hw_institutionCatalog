@@ -106,7 +106,7 @@ public class InstitutionControllerImpl implements InstitutionController {
     }
 
     @Override
-    public void deleteInstitutionById(Integer id) {
+    public void deleteInstitutionById(Integer id) throws InstitutionNotFoundException{
         institutionService.deleteInstitutionById(id);
     }
 

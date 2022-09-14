@@ -34,8 +34,10 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.2'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.11'
-    implementation('org.springframework.cloud:spring-cloud-starter-openfeign')
-    implementation('org.springframework.cloud:spring-cloud-starter-config')
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.4'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config', version: '3.1.4'
+//    compile 'com.rabbitmq:amqp-client:5.16.0'
+
 
 }
 

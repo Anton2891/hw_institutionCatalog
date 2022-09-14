@@ -47,9 +47,17 @@ databaseChangeLog:
         changes:
           - sqlFile:
               path: \db\changelog\change_sets\V_008_add_owner_id_to_institution.sql
-#    - changeSet:
-#        id: 9
-#        author: anton.stolyarov
-#          changes:
-#          - sqlFile:
-#              path: \db\changelog\change_sets\V_009_add_update_date_to_institution.sql
+    - changeSet:
+        id: 9
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_009_add_update_date_to_institution.sql
+    - changeSet:
+        id: 10
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_010_add_delete_to_institution.sql
+
+
