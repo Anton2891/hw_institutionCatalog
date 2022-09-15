@@ -20,7 +20,7 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
             = { FoundationDateIsExpiredException.class })
     protected ResponseEntity<Object> handleConflict(
             FoundationDateIsExpiredException ex, WebRequest request) {
-        String bodyOfResponse = ex.toString();
+        Object bodyOfResponse = ex;
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }

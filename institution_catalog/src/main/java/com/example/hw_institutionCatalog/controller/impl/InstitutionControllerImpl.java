@@ -12,6 +12,7 @@ import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import com.example.hw_institutionCatalog.exeption.OwnerNotFoundException;
 import com.example.hw_institutionCatalog.mapper.InstitutionMapper;
 import com.example.hw_institutionCatalog.mapper.ReviewMapper;
 import com.example.hw_institutionCatalog.service.InstitutionService;
@@ -95,7 +96,7 @@ public class InstitutionControllerImpl implements InstitutionController {
     }
 
     @Override
-    public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException{
+    public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException, OwnerNotFoundException {
         institutionService.changeOwner(changeOwnerInDto);
     }
 

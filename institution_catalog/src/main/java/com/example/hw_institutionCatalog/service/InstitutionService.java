@@ -10,6 +10,7 @@ import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import com.example.hw_institutionCatalog.exeption.OwnerNotFoundException;
 import com.google.i18n.phonenumbers.NumberParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +32,7 @@ public interface InstitutionService {
 
     void addOwner(AddOwnerInDto addOwnerInDto) throws InstitutionNotFoundException;
 
-    void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException;
+    void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException, OwnerNotFoundException;
 
     List<InstitutionSmallOutDto> getSmallList(Pageable pageable);
 

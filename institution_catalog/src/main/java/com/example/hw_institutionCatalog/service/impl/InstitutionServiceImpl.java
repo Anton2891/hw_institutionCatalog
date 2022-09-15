@@ -10,6 +10,7 @@ import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import com.example.hw_institutionCatalog.exeption.OwnerNotFoundException;
 import com.example.hw_institutionCatalog.mapper.InstitutionMapper;
 import com.example.hw_institutionCatalog.repository.InstitutionRepository;
 import com.example.hw_institutionCatalog.repository.ReviewRepository;
@@ -30,13 +31,13 @@ public class InstitutionServiceImpl implements InstitutionService {
     private final InstitutionRepository institutionRepository;
     private final ReviewRepository reviewRepository;
     private final InstitutionMapper institutionMapper;
-//    private final UserServiceClients userServiceClients;
+    private final UserServiceClients userServiceClients;
 
-    public InstitutionServiceImpl(InstitutionRepository institutionRepository, ReviewRepository reviewRepository, InstitutionMapper institutionMapper/*, UserServiceClients userServiceClients*/) {
+    public InstitutionServiceImpl(InstitutionRepository institutionRepository, ReviewRepository reviewRepository, InstitutionMapper institutionMapper, UserServiceClients userServiceClients) {
         this.institutionRepository = institutionRepository;
         this.reviewRepository = reviewRepository;
         this.institutionMapper = institutionMapper;
-//        this.userServiceClients = userServiceClients;
+        this.userServiceClients = userServiceClients;
     }
 
     @Override
@@ -154,8 +155,8 @@ public class InstitutionServiceImpl implements InstitutionService {
 
     //TODO два варианта, создать эксепшен для owner
     @Override
-//    @Transactional
-    public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException {
+    @Transactional
+    public void changeOwner(ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException, OwnerNotFoundException {
 //        Integer ownerId = changeOwnerInDto.getOldOwnerId();
 //        List<Institution> institutionList = getInstitutionByOwnerId(ownerId);
 //        for (Institution i: institutionList) {
@@ -167,11 +168,10 @@ public class InstitutionServiceImpl implements InstitutionService {
 //            byId.get().setOwnerId(changeOwnerInDto.getNewOwnerId());
 //        }
 
-        //после добавления этого всё сломалось
-//        if(userServiceClients.getUser(changeOwnerInDto.getNewOwnerId())
-//                .getStatusCode().equals(HttpStatus.NOT_FOUND)){
-//            throw new RuntimeException();
-//        }
+        if(userServiceClients.getUser(changeOwnerInDto.getNewOwnerId())
+                .getStatusCode().equals(HttpStatus.NOT_FOUND)){
+            throw new OwnerNotFoundException(changeOwnerInDto.getNewOwnerId());
+        }
 
         institutionRepository.updateUserSetStatusForName(changeOwnerInDto.getNewOwnerId(), changeOwnerInDto.getOldOwnerId());
     }

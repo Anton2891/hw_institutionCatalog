@@ -3,6 +3,7 @@ package com.example.hw_institutionCatalog;
 import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import com.example.hw_institutionCatalog.exeption.OwnerNotFoundException;
 import com.example.hw_institutionCatalog.service.InstitutionService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -17,7 +18,7 @@ public class RabbitChangeOwner {
     }
 
     @RabbitListener(queues = "myQueue")
-    private void rabbit(@Payload ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException {
+    private void rabbit(@Payload ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException, OwnerNotFoundException {
         System.out.println("change user " + "deleteOwnerInDto");
         institutionService.changeOwner(changeOwnerInDto);
     }

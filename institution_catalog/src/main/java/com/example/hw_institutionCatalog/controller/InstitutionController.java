@@ -9,6 +9,7 @@ import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import com.example.hw_institutionCatalog.exeption.OwnerNotFoundException;
 import com.example.hw_institutionCatalog.repository.data.InstitutionSmall;
 import com.google.i18n.phonenumbers.NumberParseException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -161,7 +162,7 @@ public interface InstitutionController {
             )
     })
     @PostMapping("/owner/change")
-    void changeOwner(@RequestBody ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException;
+    void changeOwner(@RequestBody ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException, OwnerNotFoundException;
 
     @GetMapping("/smallList")
     List<InstitutionSmallOutDto> getSmallList();
