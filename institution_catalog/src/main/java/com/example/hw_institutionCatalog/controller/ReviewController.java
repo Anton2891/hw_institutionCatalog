@@ -1,10 +1,14 @@
 package com.example.hw_institutionCatalog.controller;
 
+import com.example.hw_institutionCatalog.dto.out.ReviewsListOutDto;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import com.example.hw_institutionCatalog.exeption.ReviewNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/review")
 public interface ReviewController {
@@ -21,7 +25,14 @@ public interface ReviewController {
     })
     @PutMapping("/{id}")
     void refactorReviewById(@RequestParam(value = "review") String review,
-                            @PathVariable Integer id) throws InstitutionNotFoundException;
+                            @RequestParam(value = "rating") Integer rating,
+                            @PathVariable Integer id) throws ReviewNotFoundException;
+
+    @GetMapping("/{id}")
+    String getReviewById(@PathVariable Integer id) throws ReviewNotFoundException;
+
+    @GetMapping("/{institutionId}/reviews")
+    List<ReviewsListOutDto> getReviewsByInstitutionId(@PathVariable Integer institutionId) throws InstitutionNotFoundException;
 
     @Operation(summary = "Delete review by id")
     @ApiResponses(value = {

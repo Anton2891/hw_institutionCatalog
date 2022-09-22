@@ -47,9 +47,9 @@ public class InstitutionControllerImpl implements InstitutionController {
     }
 
     @Override
-    public InstitutionOutDto getDescriptionInstitutionById(Integer id)
+    public InstitutionOutDto getInstitutionById(Integer id)
             throws InstitutionNotFoundException {
-        Institution institutionDesk = institutionService.getDescriptionInstitutionById(id);
+        Institution institutionDesk = institutionService.getInstitutionById(id);
         return mapper.mapInstitutionToInstitutionOutDto(institutionDesk);
     }
 

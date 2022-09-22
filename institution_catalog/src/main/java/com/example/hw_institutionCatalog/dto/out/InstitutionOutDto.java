@@ -25,7 +25,7 @@ public class InstitutionOutDto{
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private final LocalDate foundationDate;
     private final String telephoneNumber;
-    private final List<ReviewOutDto> reviewList;
+//    private final List<ReviewOutDto> reviewList;
     private final Integer ownerId;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")

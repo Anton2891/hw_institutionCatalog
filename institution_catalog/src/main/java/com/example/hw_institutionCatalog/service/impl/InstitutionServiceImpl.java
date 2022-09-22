@@ -46,7 +46,7 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public Institution getDescriptionInstitutionById(Integer id) throws InstitutionNotFoundException {
+    public Institution getInstitutionById(Integer id) throws InstitutionNotFoundException {
         Optional<Institution> byId = institutionRepository.findById(id);
         if (byId.isEmpty()){
             throw new InstitutionNotFoundException(id);
@@ -66,7 +66,7 @@ public class InstitutionServiceImpl implements InstitutionService {
 
     @Override
     public LocalDate getFoundationDate(Integer id) throws InstitutionNotFoundException {
-        Institution institutionById = getDescriptionInstitutionById(id);
+        Institution institutionById = getInstitutionById(id);
         return institutionById.getFoundationDate();
     }
 

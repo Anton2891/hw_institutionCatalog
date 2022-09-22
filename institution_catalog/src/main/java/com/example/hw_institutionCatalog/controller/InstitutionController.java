@@ -10,7 +10,6 @@ import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.exeption.OwnerNotFoundException;
-import com.example.hw_institutionCatalog.repository.data.InstitutionSmall;
 import com.google.i18n.phonenumbers.NumberParseException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -49,7 +48,7 @@ public interface InstitutionController {
             )
     })
     @GetMapping("/{id}")
-    InstitutionOutDto getDescriptionInstitutionById(@PathVariable("id") Integer id)
+    InstitutionOutDto getInstitutionById(@PathVariable("id") Integer id)
             throws InstitutionNotFoundException;
 
     @Operation(summary = "Create institution")

@@ -23,7 +23,6 @@ import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +81,7 @@ public class InstitutionServiceTest extends AppContextTest {
     @Test
     void getDescriptionInstitutionById() throws InstitutionNotFoundException {
         int id = 1;
-        Institution institution = institutionService.getDescriptionInstitutionById(id);
+        Institution institution = institutionService.getInstitutionById(id);
         assertEquals(institution.getId(), id);
         System.out.println(institution.getDescription());
     }
@@ -91,9 +90,9 @@ public class InstitutionServiceTest extends AppContextTest {
     void refactorInstitutionById() throws InstitutionNotFoundException {
         int id = 5;
         String description = "description_test";
-        String oldDescription = institutionService.getDescriptionInstitutionById(id).getDescription();
+        String oldDescription = institutionService.getInstitutionById(id).getDescription();
         institutionService.refactorInstitutionById(id, description);
-        String newDescription = institutionService.getDescriptionInstitutionById(id).getDescription();
+        String newDescription = institutionService.getInstitutionById(id).getDescription();
         assertNotEquals(oldDescription, newDescription);
     }
 
@@ -205,7 +204,7 @@ public class InstitutionServiceTest extends AppContextTest {
     @Test
     @Transactional
     public void testLazy() throws InstitutionNotFoundException {
-        Institution institution = institutionService.getDescriptionInstitutionById(institutionWithReview.getId());
+        Institution institution = institutionService.getInstitutionById(institutionWithReview.getId());
         for (Review e : institution.getReviewList()) {
             System.out.println(e.getRating());
             System.out.println(e.getReview());

@@ -20,7 +20,7 @@ import java.util.List;
 
 public interface InstitutionService {
     Page<Institution> getAll(Pageable pageable);
-    Institution getDescriptionInstitutionById(Integer id) throws InstitutionNotFoundException;
+    Institution getInstitutionById(Integer id) throws InstitutionNotFoundException;
     Institution addInstitution(InstitutionInDto institutionInDto/*String name, String address, String description,LocalDate foundationDate*/) throws FoundationDateIsExpiredException, NumberParseException;
     LocalDate getFoundationDate(Integer id) throws InstitutionNotFoundException;
     void refactorInstitutionById(Integer id, String description) throws InstitutionNotFoundException;

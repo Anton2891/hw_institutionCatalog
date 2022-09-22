@@ -6,6 +6,7 @@ import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
+import com.example.hw_institutionCatalog.exeption.ReviewNotFoundException;
 import com.google.i18n.phonenumbers.NumberParseException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -74,11 +75,12 @@ public class ReviewServiceTest extends AppContextTest {
     }
 
     @Test
-    void refactorReviewById() throws InstitutionNotFoundException {
+    void refactorReviewById() throws ReviewNotFoundException, InstitutionNotFoundException {
         Integer id = 6;
-        var oldReviews = institutionService.getReviewInstitutionById(id, Pageable.unpaged());
-        reviewService.refactorReviewById(id, "new_test_review");
-        var newReviews = institutionService.getReviewInstitutionById(id, Pageable.unpaged());
+        var oldReviews = reviewService.getReviewById(id);
+        reviewService.refactorReviewById(id, "new_test_review", 4);
+//        var newReviews = institutionService.getReviewInstitutionById(id, Pageable.unpaged());
+        String newReviews = reviewService.getReviewById(id);
         assertNotSame(oldReviews, newReviews);
     }
 }

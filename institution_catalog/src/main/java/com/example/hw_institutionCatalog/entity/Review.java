@@ -3,6 +3,9 @@ package com.example.hw_institutionCatalog.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +31,8 @@ public class Review {
 //    private Integer institutionId;
 
     @Column(name = "rating")
+    @Min(0)
+    @Max(5)
     private Integer rating;
 
     @Column(name = "review")
