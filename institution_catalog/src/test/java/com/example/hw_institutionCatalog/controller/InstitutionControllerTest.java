@@ -1,6 +1,9 @@
 package com.example.hw_institutionCatalog.controller;
 
 import com.example.hw_institutionCatalog.AppContextTest;
+import com.example.hw_institutionCatalog.clients.UserOutDto;
+import com.example.hw_institutionCatalog.clients.UserServiceClients;
+import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,15 +11,19 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -31,6 +38,8 @@ public class InstitutionControllerTest extends AppContextTest {
     private MockMvc mockMvc;
     private InstitutionOutDto institutionOutDto;
     private InstitutionInDto institutionInDto;
+    @MockBean
+    private UserServiceClients userServiceClients;
 
     @BeforeEach
     void beforeAddRestaurant() {
@@ -49,7 +58,9 @@ public class InstitutionControllerTest extends AppContextTest {
                 .address("mmmmmmmmmmm2585")
                 .foundationDate(LocalDate.of(2011, 06, 23))
                 .telephoneNumber("+79996663322")
+                .ownerId(13)
                 .build();
+
     }
 
     @Test
@@ -111,6 +122,21 @@ public class InstitutionControllerTest extends AppContextTest {
                 .andDo(print()) //print response in console
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().string(result));
+    }
+
+    @Test
+    public void changeOwner() throws Exception {
+        Mockito.when(userServiceClients.getUser(any())).thenReturn(ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new UserOutDto()));
+        ChangeOwnerInDto dto = new ChangeOwnerInDto();
+        dto.setNewOwnerId(15);
+        dto.setOldOwnerId(13);
+        this.mockMvc.perform(post("/inst/owner/change")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(dto)))
+                .andDo(print()); //print response in console
+
     }
 
 

@@ -19,6 +19,7 @@ public abstract class InstitutionMapper {
     @Autowired
     private ReviewMapper reviewMapper;
 
+
     public abstract InstitutionOutDto mapInstitutionToInstitutionOutDto(Institution institution);
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "telephoneNumber",

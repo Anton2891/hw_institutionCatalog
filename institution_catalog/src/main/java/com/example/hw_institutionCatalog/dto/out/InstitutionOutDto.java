@@ -1,6 +1,8 @@
 package com.example.hw_institutionCatalog.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -24,5 +26,9 @@ public class InstitutionOutDto{
     private final String telephoneNumber;
     private final List<ReviewOutDto> reviewList;
     private final Integer ownerId;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssX")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private final LocalDateTime updateDateTime;
 }
