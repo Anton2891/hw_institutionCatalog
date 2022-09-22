@@ -3,6 +3,7 @@ package com.example.hw_institutionCatalog.service;
 import com.example.hw_institutionCatalog.AppContextTest;
 import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
+import com.example.hw_institutionCatalog.entity.CuisineType;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
@@ -59,6 +60,7 @@ public class InstitutionServiceTest extends AppContextTest {
                 .description("description_test")
                 .telephoneNumber("8 958 526 33 63")
                 .foundationDate(LocalDate.of(2022, 8, 26))
+                .cuisineType(CuisineType.RUS)
                 .build();
         Assertions.assertThrowsExactly(FoundationDateIsExpiredException.class,
                 () -> institutionService.addInstitution(institutionInDtoAfter),

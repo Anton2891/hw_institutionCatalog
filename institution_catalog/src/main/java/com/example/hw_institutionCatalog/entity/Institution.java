@@ -69,6 +69,11 @@ public class Institution {
     @Column(name = "is_deleted")
     private boolean idDeleted = false;
 
+    @Enumerated(EnumType.STRING)
+    @Type(type = "com.example.hw_institutionCatalog.mapper.EnumTypePostgresSql")
+    @Column(name = "cuisine_type")
+    private CuisineType cuisineType;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

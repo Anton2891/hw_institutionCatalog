@@ -59,5 +59,11 @@ databaseChangeLog:
         changes:
           - sqlFile:
               path: \db\changelog\change_sets\V_010_add_delete_to_institution.sql
+    - changeSet:
+        id: 11
+        author: anton.stolyarov
+        changes:
+          - sqlFile:
+              path: \db\changelog\change_sets\V_011_add_cuisine_type.sql
 
 

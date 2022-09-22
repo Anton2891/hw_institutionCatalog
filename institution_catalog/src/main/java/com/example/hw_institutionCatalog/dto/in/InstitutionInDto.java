@@ -1,5 +1,6 @@
 package com.example.hw_institutionCatalog.dto.in;
 
+import com.example.hw_institutionCatalog.entity.CuisineType;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
@@ -33,4 +34,5 @@ public class InstitutionInDto {
     private final LocalDate foundationDate;
     private final List<Review> reviewList;
     private final Integer ownerId;
+    private final CuisineType cuisineType;
 }

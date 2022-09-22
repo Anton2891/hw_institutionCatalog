@@ -1,5 +1,6 @@
 package com.example.hw_institutionCatalog.dto.out;
 
+import com.example.hw_institutionCatalog.entity.CuisineType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -31,4 +32,5 @@ public class InstitutionOutDto{
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssX")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private final LocalDateTime updateDateTime;
+    private final CuisineType cuisineType;
 }
