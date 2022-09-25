@@ -53,7 +53,7 @@ public class ReviewServiceTest extends AppContextTest {
 
     @Test
     void addReview() throws InstitutionNotFoundException {
-        Review review = institutionService.addReview(institutionWithReview.getId(), 6, "test_review_text");
+        Review review = institutionService.addReview(institutionWithReview.getId(), 3, "test_review_text");
         Page<Review> reviewTexts = institutionService.getReviewInstitutionById(review.getId(), Pageable.unpaged());
         assertEquals(1, reviewTexts.getTotalElements());
         assertEquals("test_review_text", reviewTexts.toList().get(0).getReview());
@@ -71,7 +71,7 @@ public class ReviewServiceTest extends AppContextTest {
     @Test
     void getRatingInstitutionById() throws InstitutionNotFoundException {
         Integer id = 8;
-        assertNotNull(institutionService.getRatingInstitutionById(id, Pageable.unpaged()));
+        assertNotNull(institutionService.getRatingInstitutionById(id));
     }
 
     @Test

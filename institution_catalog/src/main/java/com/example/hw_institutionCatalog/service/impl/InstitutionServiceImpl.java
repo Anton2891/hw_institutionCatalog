@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -92,12 +93,8 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public Page<Review> getRatingInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException{
-        Optional<Page<Review>> byId = reviewRepository.findAllById(id, pageable);
-        if (byId.isPresent()){
-            return byId.get();
-        }
-        throw new InstitutionNotFoundException(id);
+    public BigDecimal getRatingInstitutionById(Integer id){
+        return institutionRepository.getRatingById(id);
     }
 
     @Override

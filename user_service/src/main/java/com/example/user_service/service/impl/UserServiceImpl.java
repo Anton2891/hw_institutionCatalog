@@ -11,7 +11,6 @@ import com.example.user_service.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserOutDto updateUser(UserInDto userInDto, Long id) throws UserNotFoundException {
         if(!userRepository.existsById(id) && userRepository.existsByEmail(userInDto.getEmail())){
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(id);
         }
         User user = userMapper.userInDtoToUser(userInDto);
         user.setId(id);
@@ -53,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long deleteUser(Long id) throws UserNotFoundException {
         if(!userRepository.existsById(id)){
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(id);
         }
         userRepository.deleteById(id);
         return id;
@@ -63,21 +62,21 @@ public class UserServiceImpl implements UserService {
     public UserOutDto getUser(Long id) throws UserNotFoundException {
         Optional<User> byId = userRepository.findById(id);
         if (byId.isEmpty()){
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(id);
         }
         return userMapper.userToUserOutDto(byId.get());
     }
 
     @Override
     @Transactional
-    public void changePassword(ChangePasswordInDto changePasswordInDto, String email) throws UserNotFoundException {
-        Optional<User> byEmail = userRepository.findByEmail(email);
+    public void changePassword(ChangePasswordInDto changePasswordInDto) throws UserNotFoundException {
+        Optional<User> byEmail = userRepository.findByEmail(changePasswordInDto.getEmail());
         if(byEmail.isEmpty()){
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(changePasswordInDto.getEmail());
         }
         User user = byEmail.get();
         if(!Objects.equals(changePasswordInDto.getOldPassword(), user.getPassword())){
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(changePasswordInDto.getEmail());
         }
         user.setPassword(changePasswordInDto.getNewPassword());
     }

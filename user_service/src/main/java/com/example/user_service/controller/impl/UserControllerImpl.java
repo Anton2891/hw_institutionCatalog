@@ -69,7 +69,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public void changePassword(String email, ChangePasswordInDto changePasswordInDto) throws UserNotFoundException {
-        userService.changePassword(changePasswordInDto, email);
+    public void changePassword(ChangePasswordInDto changePasswordInDto) throws UserNotFoundException {
+        userService.changePassword(changePasswordInDto);
     }
 }

@@ -9,6 +9,7 @@ import com.example.hw_institutionCatalog.repository.ReviewRepository;
 import com.example.hw_institutionCatalog.repository.data.ReviewsList;
 import com.example.hw_institutionCatalog.service.ReviewService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,19 +48,22 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public List<ReviewsListOutDto> getReviewsByInstitutionId(Integer institutionId) throws InstitutionNotFoundException {
-        Optional<List<ReviewsList>> byId = reviewRepository.findSmallReviewsList(institutionId);
-        if(byId.isEmpty()){
-            throw new InstitutionNotFoundException(institutionId);
-        }
-        List<ReviewsList> reviews = byId.get();
-        System.out.println(reviews);
-        List<ReviewsListOutDto> reviewsOut = new ArrayList<>();
-        reviewMapper.mapReviewsListToReviewsListOutDto(reviews);
-//        for (ReviewsList review : reviews) {
+        List<ReviewsList> byId = reviewRepository.findSmallReviewsList(institutionId);
+//        if(byId.isEmpty()){
+//            throw new InstitutionNotFoundException(institutionId);
+//        }
+//        List<ReviewsList> reviews = byId.get();
+//        System.out.println(reviews);
+//        List<ReviewsListOutDto> reviewsOut = new ArrayList<>();
+        ;
+//        System.out.println(byId.toString());
+//        for (ReviewsList review : byId) {
 //            reviewsOut.add(reviewMapper.mapReviewsListToReviewsListOutDto(review));
 //        }
-        return reviewsOut;
+//        return byId.stream().map(reviewMapper::mapReviewsListToReviewsListOutDto).toList();
+        return reviewMapper.mapReviewsListToReviewsListOutDto(byId);
     }
 
     @Override

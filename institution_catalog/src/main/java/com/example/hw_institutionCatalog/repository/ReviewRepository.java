@@ -15,7 +15,8 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Optional<Page<Review>> findAllById(Integer id, Pageable pageable);
     List<Review> findAllByInstitutionId(Integer institutionId);
 
-    @Query(value = "select r.institution_id, left (review, 3), (character_length(review) > 3) as full_text, r.rating " +
-            "from Review r where r.institution_id = :id", nativeQuery = true)
-    Optional<List<ReviewsList>> findSmallReviewsList(@Param("id") Integer id);
+    @Query(value = "select institution_id as institutionId, substr (review, 1, 3) as review, char_length(review) > 3 " +
+            "as fullText, rating from review as r where institution_id = :id", nativeQuery = true)
+    List<ReviewsList> findSmallReviewsList(@Param("id") Integer id);
+
 }

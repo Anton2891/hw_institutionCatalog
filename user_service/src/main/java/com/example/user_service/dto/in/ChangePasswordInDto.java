@@ -24,4 +24,5 @@ public class ChangePasswordInDto {
     @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[%#&*@]).{5,}$", message = "password is not valid")
     @Size(min = 5)
     private String newPassword;
+    private String email;
 }

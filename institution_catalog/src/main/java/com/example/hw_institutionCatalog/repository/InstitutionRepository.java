@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +28,9 @@ public interface InstitutionRepository extends JpaRepository<Institution, Intege
             "join Review as r on i.id = r.institution_id \n" +
             "group by i.id", nativeQuery = true)
     List<InstitutionSmall> findSmallInstitutions(Pageable pageable);
+
+    @Query(value = "select avg(r.rating) as rating from Review  as r where institution_id = :id",
+    nativeQuery = true)
+    BigDecimal getRatingById(Integer id);
 }
 

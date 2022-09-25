@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -72,12 +73,9 @@ public class InstitutionControllerImpl implements InstitutionController {
         return reviews.map(reviewMapper::mapReviewToReviewOutDto);
     }
 
-    //надо реализовать
     @Override
-    public Double getRatingInstitutionById(Integer id, Pageable pageable)
-            throws InstitutionNotFoundException {
-        Page<Review> reviews = institutionService.getRatingInstitutionById(id, pageable);
-        return 0.5;
+    public BigDecimal getRatingInstitutionById(Integer id) throws InstitutionNotFoundException {
+        return institutionService.getRatingInstitutionById(id);
     }
 
     @Override

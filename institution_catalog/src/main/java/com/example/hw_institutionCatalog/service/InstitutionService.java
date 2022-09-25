@@ -15,6 +15,7 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface InstitutionService {
     LocalDate getFoundationDate(Integer id) throws InstitutionNotFoundException;
     void refactorInstitutionById(Integer id, String description) throws InstitutionNotFoundException;
     Page<Review> getReviewInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
-    Page<Review> getRatingInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
+    BigDecimal getRatingInstitutionById(Integer id) throws InstitutionNotFoundException;
     Review addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException;
     void deleteOwner(DeleteOwnerInDto deleteOwnerInDto) throws InstitutionNotFoundException;
     List<Institution> getInstitutionByOwnerId(Integer ownerId) throws InstitutionNotFoundException;

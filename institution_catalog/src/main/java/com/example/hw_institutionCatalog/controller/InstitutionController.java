@@ -20,6 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequestMapping("/inst")
@@ -105,8 +106,7 @@ public interface InstitutionController {
             )
     })
     @GetMapping("/{id}/rating")
-    Double getRatingInstitutionById(@PathVariable("id") Integer id,
-                                    @PageableDefault(sort = "name") Pageable pageable)
+    BigDecimal getRatingInstitutionById(@PathVariable("id") Integer id)
             throws InstitutionNotFoundException;
 
     @Operation(summary = "Add review for institution by id")

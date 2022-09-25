@@ -103,7 +103,7 @@ public class InstitutionServiceTest extends AppContextTest {
                 .telephoneNumber("+79999999999")
                 .address("zzzzzzzzzzzzz")
                 .foundationDate(LocalDate.of(2016, 01, 07))
-                .ownerId(15)
+                .ownerId(1)
                 .build();
         institutionService.addInstitution(institutionInDto1);
         InstitutionInDto institutionInDto2 = InstitutionInDto.builder()
@@ -111,14 +111,14 @@ public class InstitutionServiceTest extends AppContextTest {
                 .telephoneNumber("+79999999999")
                 .address("zzzzzzzzzzzzz")
                 .foundationDate(LocalDate.of(2015, 01, 07))
-                .ownerId(15)
+                .ownerId(1)
                 .build();
         institutionService.addInstitution(institutionInDto2);
         DeleteOwnerInDto deleteOwnerInDto = new DeleteOwnerInDto();
-        deleteOwnerInDto.setOwnerId(15);
-        assertEquals(2, institutionService.getInstitutionByOwnerId(15).size());
+        deleteOwnerInDto.setOwnerId(1);
+        assertEquals(2, institutionService.getInstitutionByOwnerId(1).size());
         institutionService.deleteOwner(deleteOwnerInDto);
-        assertEquals(0, institutionService.getInstitutionByOwnerId(15).size());
+        assertEquals(0, institutionService.getInstitutionByOwnerId(1).size());
     }
 
     /**
