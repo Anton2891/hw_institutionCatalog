@@ -3,6 +3,7 @@ package com.example.user_service.service.impl;
 import com.example.user_service.UserServiceApplicationTests;
 import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
+import com.example.user_service.exception.EmailException;
 import com.example.user_service.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ class UserServiceImplTest extends UserServiceApplicationTests{
     private UserServiceImpl userService;
 
     @Test
-    void createUser() throws UserNotFoundException {
+    void createUser() throws UserNotFoundException, EmailException {
         UserInDto userInDto = UserInDto.builder()
                 .name("Test1")
                 .surname("service")
@@ -28,7 +29,7 @@ class UserServiceImplTest extends UserServiceApplicationTests{
     }
 
     @Test
-    void updateUser() throws UserNotFoundException {
+    void updateUser() throws UserNotFoundException, EmailException {
         UserInDto userInDto = UserInDto.builder()
                 .name("Test2")
                 .surname("Institution service")
@@ -44,7 +45,7 @@ class UserServiceImplTest extends UserServiceApplicationTests{
     }
 
     @Test
-    void deleteUser() throws UserNotFoundException {
+    void deleteUser() throws UserNotFoundException, EmailException {
         UserInDto userInDto = UserInDto.builder()
                 .name("Test3")
                 .surname("Institution service")

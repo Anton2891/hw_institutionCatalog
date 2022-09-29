@@ -8,6 +8,7 @@ import com.example.user_service.dto.out.RoleOutDto;
 import com.example.user_service.dto.out.UserOutDto;
 import com.example.user_service.dto.out.UserRoleOutDto;
 import com.example.user_service.entity.UserRole;
+import com.example.user_service.exception.EmailException;
 import com.example.user_service.repository.UserRoleRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ class RoleServiceImplTest extends UserServiceApplicationTests {
     }
 
     @Test
-    void addRoleToUser() throws RoleNotFoundException {
+    void addRoleToUser() throws RoleNotFoundException, EmailException {
         RoleInDto roleInDto = RoleInDto.builder()
                 .roleName("admin1")
                 .build();
@@ -69,7 +70,7 @@ class RoleServiceImplTest extends UserServiceApplicationTests {
     }
 
     @Test
-    void deleteRoleToUser() throws RoleNotFoundException {
+    void deleteRoleToUser() throws RoleNotFoundException, EmailException {
         RoleInDto roleInDto = RoleInDto.builder()
                 .roleName("admin2")
                 .build();

@@ -1,6 +1,5 @@
 package com.example.hw_institutionCatalog.clients;
 
-import org.hibernate.mapping.Map;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

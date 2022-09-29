@@ -29,11 +29,6 @@ public class ReviewControllerImpl implements ReviewController {
         return review;
     }
 
-    @Override
-    public List<ReviewsListOutDto> getReviewsByInstitutionId(Integer institutionId) throws InstitutionNotFoundException {
-        return service.getReviewsByInstitutionId(institutionId);
-    }
-
     public void deleteReviewById(Integer id){
         service.deleteReviewById(id);
     }

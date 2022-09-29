@@ -9,7 +9,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class RabbitChangeOwner {
     private final InstitutionService institutionService;
 
@@ -17,9 +17,9 @@ public class RabbitChangeOwner {
         this.institutionService = institutionService;
     }
 
-    @RabbitListener(queues = "myQueue")
+    @RabbitListener(queues = "changeOwnerQueue")
     private void rabbit(@Payload ChangeOwnerInDto changeOwnerInDto) throws InstitutionNotFoundException, OwnerNotFoundException {
-        System.out.println("change user " + "deleteOwnerInDto");
+        System.out.println("change user " + "changeOwnerInDto");
         institutionService.changeOwner(changeOwnerInDto);
     }
 }

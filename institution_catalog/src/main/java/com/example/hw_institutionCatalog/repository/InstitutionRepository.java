@@ -18,7 +18,12 @@ public interface InstitutionRepository extends JpaRepository<Institution, Intege
     @Override
     Optional<Institution> findById(Integer integer);
 
+
+//    @Query(value = "select i.id, i.owner_id from institution i where owner_id = :ownerId", nativeQuery = true)
+//    Optional<List<Institution>> findAllByOwnerId(@Param("ownerId") Integer ownerId);
+
     Optional<List<Institution>> findAllByOwnerId(Integer ownerId);
+
 
     @Modifying
     @Query("update Institution i set i.ownerId = :newOwnerId where i.ownerId = :oldOwnerId")

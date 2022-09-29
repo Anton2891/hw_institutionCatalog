@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class RabbitDeleteOwner {
     private final InstitutionService institutionService;
 
@@ -15,7 +15,7 @@ public class RabbitDeleteOwner {
         this.institutionService = institutionService;
     }
 
-    @RabbitListener(queues = "myQueue")
+    @RabbitListener(queues = "deleteOwnerQueue")
     private void rabbit(@Payload DeleteOwnerInDto deleteOwnerInDto) throws InstitutionNotFoundException {
         System.out.println("delete user " + "deleteOwnerInDto");
         institutionService.deleteOwner(deleteOwnerInDto);

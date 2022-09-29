@@ -8,6 +8,7 @@ import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
+import com.example.hw_institutionCatalog.dto.out.ReviewsListOutDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
@@ -66,12 +67,12 @@ public class InstitutionControllerImpl implements InstitutionController {
 
     }
 
-    @Override
-    public Page<ReviewOutDto> getReviewInstitutionById(Integer id, Pageable pageable)
-            throws InstitutionNotFoundException {
-        Page<Review> reviews = institutionService.getReviewInstitutionById(id, pageable);
-        return reviews.map(reviewMapper::mapReviewToReviewOutDto);
-    }
+//    @Override
+//    public Page<ReviewOutDto> getReviewInstitutionById(Integer id, Pageable pageable)
+//            throws InstitutionNotFoundException {
+//        Page<Review> reviews = institutionService.getReviewInstitutionById(id, pageable);
+//        return reviews.map(reviewMapper::mapReviewToReviewOutDto);
+//    }
 
     @Override
     public BigDecimal getRatingInstitutionById(Integer id) throws InstitutionNotFoundException {
@@ -104,6 +105,11 @@ public class InstitutionControllerImpl implements InstitutionController {
         return institutionService.getSmallList(pageable);
     }
 
+    @Override
+    public List<ReviewsListOutDto> getReviewsByInstitutionId(Integer institutionId) throws InstitutionNotFoundException {
+        Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Order.by("rating")));
+        return institutionService.getReviewsByInstitutionId(institutionId, pageable);
+    }
     @Override
     public void deleteInstitutionById(Integer id) throws InstitutionNotFoundException{
         institutionService.deleteInstitutionById(id);

@@ -48,25 +48,6 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    @Transactional
-    public List<ReviewsListOutDto> getReviewsByInstitutionId(Integer institutionId) throws InstitutionNotFoundException {
-        List<ReviewsList> byId = reviewRepository.findSmallReviewsList(institutionId);
-//        if(byId.isEmpty()){
-//            throw new InstitutionNotFoundException(institutionId);
-//        }
-//        List<ReviewsList> reviews = byId.get();
-//        System.out.println(reviews);
-//        List<ReviewsListOutDto> reviewsOut = new ArrayList<>();
-        ;
-//        System.out.println(byId.toString());
-//        for (ReviewsList review : byId) {
-//            reviewsOut.add(reviewMapper.mapReviewsListToReviewsListOutDto(review));
-//        }
-//        return byId.stream().map(reviewMapper::mapReviewsListToReviewsListOutDto).toList();
-        return reviewMapper.mapReviewsListToReviewsListOutDto(byId);
-    }
-
-    @Override
     public void deleteReviewById(Integer id) {
         reviewRepository.deleteById(id);
     }

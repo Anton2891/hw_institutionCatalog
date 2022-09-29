@@ -7,6 +7,7 @@ import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionOutDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
 import com.example.hw_institutionCatalog.dto.out.ReviewOutDto;
+import com.example.hw_institutionCatalog.dto.out.ReviewsListOutDto;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
 import com.example.hw_institutionCatalog.exeption.InstitutionNotFoundException;
 import com.example.hw_institutionCatalog.exeption.OwnerNotFoundException;
@@ -90,10 +91,13 @@ public interface InstitutionController {
                     description = "false"
             )
     })
-    @GetMapping("/{id}/reviews")
-    Page<ReviewOutDto> getReviewInstitutionById(@PageableDefault(sort = "name")
-                                                @PathVariable("id") Integer id, Pageable pageable)
-            throws InstitutionNotFoundException;
+    @GetMapping("/{institutionId}/reviews")
+    List<ReviewsListOutDto> getReviewsByInstitutionId(@PathVariable Integer institutionId) throws InstitutionNotFoundException;
+
+//    @GetMapping("/{id}/reviews")
+//    Page<ReviewOutDto> getReviewInstitutionById(@PageableDefault(sort = "name")
+//                                                @PathVariable("id") Integer id, Pageable pageable)
+//            throws InstitutionNotFoundException;
 
     @Operation(summary = "Get rating for institution by id")
     @ApiResponses(value = {

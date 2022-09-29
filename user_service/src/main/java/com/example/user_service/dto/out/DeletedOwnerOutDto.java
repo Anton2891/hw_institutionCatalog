@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DeletedOwnerOutDto {
-    private Long userId;
+    private Integer ownerId;
 }

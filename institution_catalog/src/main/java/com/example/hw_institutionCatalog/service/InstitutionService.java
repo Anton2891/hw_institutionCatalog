@@ -6,6 +6,7 @@ import com.example.hw_institutionCatalog.dto.in.ChangeOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.DeleteOwnerInDto;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
 import com.example.hw_institutionCatalog.dto.out.InstitutionSmallOutDto;
+import com.example.hw_institutionCatalog.dto.out.ReviewsListOutDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
@@ -25,7 +26,8 @@ public interface InstitutionService {
     Institution addInstitution(InstitutionInDto institutionInDto/*String name, String address, String description,LocalDate foundationDate*/) throws FoundationDateIsExpiredException, NumberParseException;
     LocalDate getFoundationDate(Integer id) throws InstitutionNotFoundException;
     void refactorInstitutionById(Integer id, String description) throws InstitutionNotFoundException;
-    Page<Review> getReviewInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
+    List<ReviewsListOutDto> getReviewsByInstitutionId(Integer institutionId, Pageable pageable) throws InstitutionNotFoundException;
+//    Page<Review> getReviewInstitutionById(Integer id, Pageable pageable) throws InstitutionNotFoundException;
     BigDecimal getRatingInstitutionById(Integer id) throws InstitutionNotFoundException;
     Review addReview(Integer institutionId, Integer rating, String review) throws InstitutionNotFoundException;
     void deleteOwner(DeleteOwnerInDto deleteOwnerInDto) throws InstitutionNotFoundException;

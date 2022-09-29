@@ -31,9 +31,6 @@ public interface ReviewController {
     @GetMapping("/{id}")
     String getReviewById(@PathVariable Integer id) throws ReviewNotFoundException;
 
-    @GetMapping("/{institutionId}/reviews")
-    List<ReviewsListOutDto> getReviewsByInstitutionId(@PathVariable Integer institutionId) throws InstitutionNotFoundException;
-
     @Operation(summary = "Delete review by id")
     @ApiResponses(value = {
             @ApiResponse(

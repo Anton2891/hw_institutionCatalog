@@ -4,6 +4,7 @@ import com.example.user_service.dto.in.ChangeOwnerInDto;
 import com.example.user_service.dto.in.ChangePasswordInDto;
 import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
+import com.example.user_service.exception.EmailException;
 import com.example.user_service.exception.UserNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,7 +28,7 @@ public interface UserController {
             )
     })
     @PostMapping
-    UserOutDto createUser(@Valid @RequestBody UserInDto userInDto);
+    UserOutDto createUser(@Valid @RequestBody UserInDto userInDto) throws EmailException;
 
     @Operation(summary = "Update user by id")
     @ApiResponses(value = {

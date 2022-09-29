@@ -14,6 +14,4 @@ public interface ReviewService {
     void deleteReviewById(Integer id);
 
     String getReviewById(Integer id) throws ReviewNotFoundException;
-
-    List<ReviewsListOutDto> getReviewsByInstitutionId(Integer institutionId) throws InstitutionNotFoundException;
 }

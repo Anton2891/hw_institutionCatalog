@@ -7,6 +7,7 @@ import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.ChangeOwnerOutDto;
 import com.example.user_service.dto.out.DeletedOwnerOutDto;
 import com.example.user_service.dto.out.UserOutDto;
+import com.example.user_service.exception.EmailException;
 import com.example.user_service.exception.UserNotFoundException;
 import com.example.user_service.service.impl.UserServiceImpl;
 import org.springframework.amqp.rabbit.core.RabbitMessageOperations;
@@ -37,7 +38,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public UserOutDto createUser(UserInDto userInDto) {
+    public UserOutDto createUser(UserInDto userInDto) throws EmailException {
         return userService.createUser(userInDto);
     }
 
@@ -49,14 +50,15 @@ public class UserControllerImpl implements UserController {
     @Override
     public Long deleteUser(Long id) throws UserNotFoundException {
         Long idDell = userService.deleteUser(id);
+        Integer idInt = idDell.intValue();
 //        rabbitTemplate.convertAndSend("myQueue", new DeletedOwnerOutDto(id));
-        rabbitTemplate.convertSendAndReceive("myQueue", new DeletedOwnerOutDto(id), DeletedOwnerOutDto.class);
+        rabbitTemplate.convertSendAndReceive("deleteOwnerQueue", new DeletedOwnerOutDto(idInt), DeletedOwnerOutDto.class);
         return idDell;
     }
 
     @Override
     public void changeOwner(ChangeOwnerInDto changeOwnerInDto){
-        rabbitTemplate.convertSendAndReceive("myQueue",
+        rabbitTemplate.convertSendAndReceive("changeOwnerQueue",
                 new ChangeOwnerOutDto(changeOwnerInDto.getOldOwnerId(),
                         changeOwnerInDto.getNewOwnerId()), ChangeOwnerOutDto.class);
     }

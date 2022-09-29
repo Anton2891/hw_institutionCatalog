@@ -2,6 +2,7 @@ package com.example.hw_institutionCatalog.service;
 
 import com.example.hw_institutionCatalog.AppContextTest;
 import com.example.hw_institutionCatalog.dto.in.InstitutionInDto;
+import com.example.hw_institutionCatalog.dto.out.ReviewsListOutDto;
 import com.example.hw_institutionCatalog.entity.Institution;
 import com.example.hw_institutionCatalog.entity.Review;
 import com.example.hw_institutionCatalog.exeption.FoundationDateIsExpiredException;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,18 +56,18 @@ public class ReviewServiceTest extends AppContextTest {
     @Test
     void addReview() throws InstitutionNotFoundException {
         Review review = institutionService.addReview(institutionWithReview.getId(), 3, "test_review_text");
-        Page<Review> reviewTexts = institutionService.getReviewInstitutionById(review.getId(), Pageable.unpaged());
-        assertEquals(1, reviewTexts.getTotalElements());
-        assertEquals("test_review_text", reviewTexts.toList().get(0).getReview());
+        List<ReviewsListOutDto> reviewTexts = institutionService.getReviewsByInstitutionId(review.getId(), Pageable.unpaged());
+        assertEquals(1, reviewTexts.size());
+        assertEquals("test_review_text", reviewTexts.get(0).getReview());
         Assertions.assertThrows(InstitutionNotFoundException.class, () ->
                 institutionService.addReview(500, 98, "qqq"));
     }
 
     @Test
-    void getReviewInstitutionById() throws InstitutionNotFoundException {
+    void getReviewsByInstitutionId() throws InstitutionNotFoundException {
         Integer id = 11;
-        assertNotNull(institutionService.getReviewInstitutionById(id, Pageable.unpaged()));
-        System.out.println(institutionService.getReviewInstitutionById(id, Pageable.unpaged()));
+        assertNotNull(institutionService.getReviewsByInstitutionId(id, Pageable.unpaged()));
+        System.out.println(institutionService.getReviewsByInstitutionId(id, Pageable.unpaged()));
     }
 
     @Test

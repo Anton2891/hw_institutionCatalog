@@ -28,6 +28,14 @@ public class InstitutionApp {
 	public Queue myQueue() {
 		return new Queue("myQueue", false);
 	}
+	@Bean("changeOwnerQueue")
+	public Queue changeOwnerQueue() {
+		return new Queue("changeOwnerQueue", false);
+	}
+	@Bean("deleteOwnerQueue")
+	public Queue deleteOwnerQueue() {
+		return new Queue("deleteOwnerQueue", false);
+	}
 
 	@Bean
 	public MessageConverter jsonMessageConverter() {

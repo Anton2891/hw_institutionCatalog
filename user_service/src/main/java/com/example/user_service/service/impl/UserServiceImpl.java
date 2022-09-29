@@ -4,6 +4,7 @@ import com.example.user_service.dto.in.ChangePasswordInDto;
 import com.example.user_service.dto.in.UserInDto;
 import com.example.user_service.dto.out.UserOutDto;
 import com.example.user_service.entity.User;
+import com.example.user_service.exception.EmailException;
 import com.example.user_service.exception.UserNotFoundException;
 import com.example.user_service.mapper.UserMapper;
 import com.example.user_service.repository.UserRepository;
@@ -26,9 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserOutDto createUser(UserInDto userInDto) {
-        if (userRepository.existsByEmail(userInDto.getEmail())){
-            throw new RuntimeException();
+    public UserOutDto createUser(UserInDto userInDto) throws EmailException {
+        String email = userInDto.getEmail();
+        if (userRepository.existsByEmail(email)){
+            throw new EmailException(email + " already exists!");
         }
         User user = userMapper.userInDtoToUser(userInDto);
         return userMapper.userToUserOutDto(userRepository.save(user));
